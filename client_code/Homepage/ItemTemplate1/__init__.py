@@ -1,5 +1,7 @@
 from ._anvil_designer import ItemTemplate1Template
 from anvil import *
+import anvil.google.auth, anvil.google.drive
+from anvil.google.drive import app_files
 
 class ItemTemplate1(ItemTemplate1Template):
   def __init__(self, **properties):
