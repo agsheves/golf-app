@@ -49,20 +49,20 @@ services:
   source: /runtime/services/tables.yml
 - client_config:
     app_files:
-    - alternateLink: https://docs.google.com/spreadsheets/d/1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY/edit?usp=drivesdk
+    - alternateLink: https://docs.google.com/spreadsheets/d/1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E/edit?usp=drivesdk
       appDataContents: false
       capabilities: {canCopy: true, canEdit: true}
       copyRequiresWriterPermission: false
       copyable: true
-      createdDate: '2024-12-05T14:54:11.933Z'
+      createdDate: '2025-07-21T18:50:49.964Z'
       editable: true
-      embedLink: https://docs.google.com/spreadsheets/d/1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY/htmlembed?ouid=112763004391083097336
-      etag: '"MTczMzQxMjQxNjI0NQ"'
+      embedLink: https://docs.google.com/spreadsheets/d/1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E/htmlembed?ouid=112763004391083097336
+      etag: '"MTc1MzEyNDI2NzEwNQ"'
       explicitlyTrashed: false
-      exportLinks: {application/pdf: 'https://docs.google.com/spreadsheets/export?id=1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY&exportFormat=pdf', application/vnd.oasis.opendocument.spreadsheet: 'https://docs.google.com/spreadsheets/export?id=1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY&exportFormat=ods', application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: 'https://docs.google.com/spreadsheets/export?id=1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY&exportFormat=xlsx', application/x-vnd.oasis.opendocument.spreadsheet: 'https://docs.google.com/spreadsheets/export?id=1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY&exportFormat=ods', application/zip: 'https://docs.google.com/spreadsheets/export?id=1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY&exportFormat=zip', text/csv: 'https://docs.google.com/spreadsheets/export?id=1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY&exportFormat=csv', text/tab-separated-values: 'https://docs.google.com/spreadsheets/export?id=1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY&exportFormat=tsv'}
+      exportLinks: {application/pdf: 'https://docs.google.com/spreadsheets/export?id=1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E&exportFormat=pdf', application/vnd.oasis.opendocument.spreadsheet: 'https://docs.google.com/spreadsheets/export?id=1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E&exportFormat=ods', application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: 'https://docs.google.com/spreadsheets/export?id=1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E&exportFormat=xlsx', application/x-vnd.oasis.opendocument.spreadsheet: 'https://docs.google.com/spreadsheets/export?id=1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E&exportFormat=ods', application/zip: 'https://docs.google.com/spreadsheets/export?id=1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E&exportFormat=zip', text/csv: 'https://docs.google.com/spreadsheets/export?id=1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E&exportFormat=csv', text/tab-separated-values: 'https://docs.google.com/spreadsheets/export?id=1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E&exportFormat=tsv'}
       fileSize: '1024'
       iconLink: https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.spreadsheet
-      id: 1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY
+      id: 1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E
       kind: drive#file
       labels: {hidden: false, restricted: false, starred: false, trashed: false, viewed: true}
       lastModifyingUser:
@@ -73,11 +73,11 @@ services:
         permissionId: '11927791224355342699'
         picture: {url: 'https://lh3.googleusercontent.com/a/ACg8ocINjmQO9CdouxTdlWe8bkoyc_TuJmNAqjUXSTzZ9KDAVl1fAg=s64'}
       lastModifyingUserName: bill cipher
-      lastViewedByMeDate: '2024-12-05T15:26:56.245Z'
+      lastViewedByMeDate: '2025-07-21T18:57:47.105Z'
       markedViewedByMeDate: '1970-01-01T00:00:00.000Z'
       mimeType: application/vnd.google-apps.spreadsheet
-      modifiedByMeDate: '2024-12-05T15:26:56.245Z'
-      modifiedDate: '2024-12-05T15:26:56.245Z'
+      modifiedByMeDate: '2025-07-21T18:57:47.105Z'
+      modifiedDate: '2025-07-21T18:57:47.105Z'
       ownerNames: [bill cipher]
       owners:
       - displayName: bill cipher
@@ -87,17 +87,15 @@ services:
         permissionId: '11927791224355342699'
         picture: {url: 'https://lh3.googleusercontent.com/a/ACg8ocINjmQO9CdouxTdlWe8bkoyc_TuJmNAqjUXSTzZ9KDAVl1fAg=s64'}
       parents:
-      - {id: 0AJokZrXo6-ujUk9PVA, isRoot: true, kind: drive#parentReference, parentLink: 'https://www.googleapis.com/drive/v2/files/0AJokZrXo6-ujUk9PVA', selfLink: 'https://www.googleapis.com/drive/v2/files/1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY/parents/0AJokZrXo6-ujUk9PVA'}
-      permission: roclient
-      python_name: untitled_spreadsheet
+      - {id: 0AJokZrXo6-ujUk9PVA, isRoot: true, kind: drive#parentReference, parentLink: 'https://www.googleapis.com/drive/v2/files/0AJokZrXo6-ujUk9PVA', selfLink: 'https://www.googleapis.com/drive/v2/files/1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E/parents/0AJokZrXo6-ujUk9PVA'}
+      python_name: golf_corse_registry
       quotaBytesUsed: '1024'
-      selfLink: https://www.googleapis.com/drive/v2/files/1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY
+      selfLink: https://www.googleapis.com/drive/v2/files/1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E
       shared: false
       spaces: [drive]
-      thumbnailLink: https://lh3.googleusercontent.com/drive-storage/AJQWtBMfhTEud8THui9SK4uP-yhsasF7dk5_viJDbSq49ThBhUKzojX3hIq0mQS2E791Y3tHJrG-s79LeGJvml6R-lcGY1zNlqrbJitV9L5ZTKl0-ccChCavoFm9W77oVw=s220
-      title: Untitled spreadsheet
-      userPermission: {etag: '"4v5Dn5cfpxbHNNJWfAhQs70IbiA"', id: me, kind: drive#permission, pendingOwner: false, role: owner, selfLink: 'https://www.googleapis.com/drive/v2/files/1MdX-yNw4bCytd_Ijpyx5z8TRBMm2utmVkdYqLOmUEzY/permissions/me', type: user}
-      version: '19'
+      title: Golf Corse Registry
+      userPermission: {etag: '"4EGum9kNx13hC-ea9mOlEl6LuTk"', id: me, kind: drive#permission, pendingOwner: false, role: owner, selfLink: 'https://www.googleapis.com/drive/v2/files/1nt4NGtc-v3YxXoDfnEW-MwZ45lbyWQpc8IMBVpu7C6E/permissions/me', type: user}
+      version: '6'
       writersCanShare: true
   server_config: {enc_delegation_refresh_token: Z4Xte7z0mk5JdFtEnuWDD8gQuSMRGK366X2XTZOmQHL3i1vfjR0Twwp/32M1B9Usmp3w/cyj4NxQmiAIStecT3WNAoqShoNTj2zfOU0rRQqGFKqAbfQXNz6hZHALKg+Fu3VkprFZIcL5XfFstE16YQpdyyNumJWr+/CSapvmoYi+zgDreMznVKwpYx6pjHG7Bkq1Gb2f2ZFxvgX6fmry127ZoGvJwpep5Jd1TAFtQ7/gotXsoY/zJcVcQKTL7w8h1pKis+wfOKxurMh5mKUxNQzS+USjqSfFw0xMYHjF94Dvji4LQ/Z3ep1Or8AKQg==}
   source: /runtime/services/google.yml

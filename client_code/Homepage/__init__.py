@@ -16,6 +16,12 @@ class Homepage(HomepageTemplate):
     self.refresh_entries()
       # Set an event handler on the RepeatingPanel (our 'entries_panel')
     self.entries_panel.set_event_handler('x-delete-entry', self.delete_entry)
+    print(self.entries_panel.get_components())
+    
+    lib = app_files.golf_corse_registry
+    print("File is called: " + lib.title)
+    self.worksheet = lib[0]
+    print(self.worksheet.fields)
 
   def add_entry_button_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -43,4 +49,5 @@ class Homepage(HomepageTemplate):
     anvil.server.call('delete_entry', entry)
     # Refresh entry to remove the deleted entry from the Homepage
     self.refresh_entries()
+
 

@@ -8,13 +8,23 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from ..EntryEdit import EntryEdit
 
+
 class EntryView(EntryViewTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
+    
+    lib = app_files.golf_corse_registry
+    print("File is called: " + lib.title)
+    self.worksheet = lib[0]
+
+    self.description.text = self.worksheet.get_cell(1,1).value
 
     # Any code you write here will run when the form opens.
 
+ 
+    
+  
   def edit_entry_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     # Create a copy of the existing entry from the Data Table 
@@ -41,5 +51,4 @@ class EntryView(EntryViewTemplate):
     # (which is the entries_panel on Homepage)
     if confirm(f"Are you sure you want to delete {self.item['title']}?"):
       self.parent.raise_event('x-delete-entry', entry=self.item)
-
 
