@@ -23,6 +23,8 @@ class Homepage(HomepageTemplate):
     self.worksheet = lib[0]
     print(self.worksheet.fields)
 
+
+
   def add_entry_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     # Initialise an empty dictionary to store the user inputs

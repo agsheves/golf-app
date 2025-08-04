@@ -18,7 +18,7 @@ class EntryView(EntryViewTemplate):
     print("File is called: " + lib.title)
     self.worksheet = lib[0]
 
-    self.description.text = self.worksheet.get_cell(1,1).value
+   
 
     # Any code you write here will run when the form opens.
 

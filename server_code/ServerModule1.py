@@ -20,13 +20,14 @@ def add_entry(entry_dict):
 @anvil.server.callable
 def get_entries():
   # Get a list of entries from the Data Table, sorted by 'created' column, in descending order
-  return app_tables.entries.search(
-    tables.order_by("created", ascending=False)
+  return app_tables.course_info.search(
+    tables.order_by("address", ascending=False)
   )
 
 @anvil.server.callable
 def update_entry(entry, entry_dict):
-  # check that the entry given is really a row in the ‘entries’ table
+  # check that the entry given is really a row in the ‘entries’ table@
+  entry.update(**entry_dict)
   if app_tables.course_info.has_row(entry):
     entry_dict['updated'] = datetime.now()
     entry.update(**entry_dict)
@@ -68,7 +69,7 @@ def update_courses():
       address=address,
       phone_number=phone_number,
       thumbnail =	thumbnail,
-      #description=description,
+      description=description,
       website=website,
       type=type,
       cost=cost,

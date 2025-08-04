@@ -19,9 +19,6 @@ db_schema:
       name: type
       type: string
     - admin_ui: {width: 200}
-      name: thumbnail
-      type: media
-    - admin_ui: {width: 200}
       name: scorecard
       type: string
     - admin_ui: {width: 200}
@@ -47,6 +44,9 @@ db_schema:
       type: string
     - admin_ui: {order: 16.5, width: 200}
       name: rating_grint
+      type: string
+    - admin_ui: {order: 20, width: 200}
+      name: thumbnail
       type: string
     server: full
     title: course_info
