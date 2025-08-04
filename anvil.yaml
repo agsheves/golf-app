@@ -25,28 +25,28 @@ db_schema:
       name: scorecard
       type: string
     - admin_ui: {width: 200}
-      name: rating_grint
-      type: number
-    - admin_ui: {width: 200}
-      name: rating_google
-      type: number
-    - admin_ui: {width: 200}
       name: phone_number
       type: string
     - admin_ui: {width: 200}
       name: name
       type: string
     - admin_ui: {width: 200}
-      name: cost
-      type: number
-    - admin_ui: {width: 200}
-      name: booking_window_days
-      type: number
-    - admin_ui: {width: 200}
       name: address
       type: string
     - admin_ui: {order: 19, width: 200}
       name: description
+      type: string
+    - admin_ui: {order: 9.75, width: 200}
+      name: booking_window_days
+      type: string
+    - admin_ui: {order: 11.875, width: 200}
+      name: rating_google
+      type: string
+    - admin_ui: {order: 13.4375, width: 200}
+      name: cost
+      type: string
+    - admin_ui: {order: 16.5, width: 200}
+      name: rating_grint
       type: string
     server: full
     title: course_info

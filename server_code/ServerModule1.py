@@ -7,6 +7,7 @@ import anvil.server
 from datetime import datetime
 import anvil.secrets
 import anvil.users
+import json
 
 
 @anvil.server.callable
@@ -51,15 +52,15 @@ def update_courses():
     name = r['name']
     address = r['address']
     phone_number = r['phone_number']
-    thumbnail = ['thumbnail']
-    description = ['description']
-    website = ['website']
-    type = ['type']
-    cost = ['cost']
-    booking_window_days = ['booking_window_days']
-    scorecard = ['scorecard']
-    rating_google = ['rating_google']
-    rating_grint = ['rating_grint']
+    thumbnail = r['thumbnail']
+    description = r['description']
+    website = r['website']
+    type = r['type']
+    cost = r['cost']
+    booking_window_days = r['booking_window_days']
+    scorecard = r['scorecard']
+    rating_google = r['rating_google']
+    rating_grint = r['rating_grint']
     thumbnail = r['thumbnail']
     booking_window_days = r['booking_window_days']
     app_tables.course_info.add_row(
