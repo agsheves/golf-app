@@ -9,6 +9,47 @@ db_schema:
       type: string
     server: full
     title: Categories
+  course_info:
+    client: none
+    columns:
+    - admin_ui: {width: 200}
+      name: website
+      type: string
+    - admin_ui: {width: 200}
+      name: type
+      type: string
+    - admin_ui: {width: 200}
+      name: thumbnail
+      type: media
+    - admin_ui: {width: 200}
+      name: scorecard
+      type: string
+    - admin_ui: {width: 200}
+      name: rating_grint
+      type: number
+    - admin_ui: {width: 200}
+      name: rating_google
+      type: number
+    - admin_ui: {width: 200}
+      name: phone_number
+      type: string
+    - admin_ui: {width: 200}
+      name: name
+      type: string
+    - admin_ui: {width: 200}
+      name: cost
+      type: number
+    - admin_ui: {width: 200}
+      name: booking_window_days
+      type: number
+    - admin_ui: {width: 200}
+      name: address
+      type: string
+    - admin_ui: {order: 19, width: 200}
+      name: description
+      type: string
+    server: full
+    title: course_info
   entries:
     client: search
     columns:
@@ -45,7 +86,7 @@ runtime_options:
   version: 2
 services:
 - client_config: {}
-  server_config: {}
+  server_config: {auto_create_missing_columns: true}
   source: /runtime/services/tables.yml
 - client_config:
     app_files:
