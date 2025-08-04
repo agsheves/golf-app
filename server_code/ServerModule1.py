@@ -68,7 +68,7 @@ def update_courses():
       address=address,
       phone_number=phone_number,
       thumbnail =	thumbnail,
-      description=description,
+      #description=description,
       website=website,
       type=type,
       cost=cost,
