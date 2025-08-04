@@ -27,7 +27,7 @@ def get_entries():
 @anvil.server.callable
 def update_entry(entry, entry_dict):
   # check that the entry given is really a row in the ‘entries’ table
-  if app_tables.entries.has_row(entry):
+  if app_tables.course_info.has_row(entry):
     entry_dict['updated'] = datetime.now()
     entry.update(**entry_dict)
   else:
