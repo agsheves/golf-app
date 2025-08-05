@@ -47,6 +47,7 @@ def delete_entry(entry):
 
 @anvil.server.callable
 def update_courses():
+  app_tables.course_info.delete_all_rows()
   golf_files = app_files.golf_corse_registry
   ws = golf_files["Sheet1"]
   for r in ws.rows:
@@ -77,14 +78,27 @@ def update_courses():
     
     
     app_tables.course_info.add_row(
-      name=name,
-      address=address,
-      phone_number=phone_number,
-      thumbnail =	thumbnail,
-      description=description,
-      website=website,
-      cost=cost,
-      scorecard=scorecard,
-      rating_google=rating_google,
-      rating_grint=rating_grint
+      state = state,
+      name = name,
+      address = address,
+      zip_code = zip_code,
+      phone_number = phone_number,
+      rating_golf_pass = rating_golf_pass,
+      course_length = course_length,
+      course_Slope = course_Slope,
+     rating = rating,
+     amenities = amenities,
+      weekday_rate = weekday_rate,
+      weekend_rate = weekend_rate,
+      walking_rates = walking_rates,
+      twlight_rate = twlight_rate,
+      rent_cart_price = rent_cart_price,
+      thumbnail = thumbnail,
+      booking_information = booking_information,
+      description = description,
+      website = website,
+      cost = cost,
+      scorecard = scorecard,
+      rating_google = rating_google,
+     rating_grint = rating_grint,
     )

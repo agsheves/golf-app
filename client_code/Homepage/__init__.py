@@ -18,10 +18,7 @@ class Homepage(HomepageTemplate):
     self.entries_panel.set_event_handler('x-delete-entry', self.delete_entry)
     print(self.entries_panel.get_components())
     
-    lib = app_files.golf_corse_registry
-    print("File is called: " + lib.title)
-    self.worksheet = lib[0]
-    print(self.worksheet.fields)
+    
 
 
 

@@ -14,9 +14,7 @@ class EntryView(EntryViewTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     
-    lib = app_files.golf_corse_registry
-    print("File is called: " + lib.title)
-    self.worksheet = lib[0]
+   
 
    
 
@@ -52,3 +50,7 @@ class EntryView(EntryViewTemplate):
     if confirm(f"Are you sure you want to delete {self.item['title']}?"):
       self.parent.raise_event('x-delete-entry', entry=self.item)
 
+  def link_1_click(self, **event_args):
+    from .DetailedView import DetailedView
+    alert(content=DetailedView(),large=True, dismissible=True, title='')
+    

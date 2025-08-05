@@ -42,6 +42,45 @@ db_schema:
     - admin_ui: {order: 20, width: 200}
       name: thumbnail
       type: string
+    - admin_ui: {order: 21, width: 200}
+      name: zip_code
+      type: string
+    - admin_ui: {width: 200}
+      name: amenities
+      type: string
+    - admin_ui: {width: 200}
+      name: booking_information
+      type: simpleObject
+    - admin_ui: {width: 200}
+      name: course_Slope
+      type: string
+    - admin_ui: {width: 200}
+      name: course_length
+      type: string
+    - admin_ui: {width: 200}
+      name: rating
+      type: string
+    - admin_ui: {width: 200}
+      name: rating_golf_pass
+      type: string
+    - admin_ui: {width: 200}
+      name: rent_cart_price
+      type: string
+    - admin_ui: {width: 200}
+      name: twlight_rate
+      type: string
+    - admin_ui: {width: 200}
+      name: state
+      type: string
+    - admin_ui: {width: 200}
+      name: walking_rates
+      type: string
+    - admin_ui: {width: 200}
+      name: weekday_rate
+      type: string
+    - admin_ui: {width: 200}
+      name: weekend_rate
+      type: string
     server: full
     title: course_info
   entries:
