@@ -50,20 +50,32 @@ def update_courses():
   golf_files = app_files.golf_corse_registry
   ws = golf_files["Sheet1"]
   for r in ws.rows:
+    state = r['state']
     name = r['name']
     address = r['address']
+    zip_code = r['zip_code']
     phone_number = r['phone_number']
+    rating_golf_pass = r['rating_golf_pass']
+    course_length = r['course_length']
+    course_Slope = r['course_Slope']
+    rating = r['rating']
+    amenities = r['amenities']
+    weekday_rate = r['weekday_rate']
+    weekend_rate = r['weekend_rate']
+    walking_rates = r['walking_rates']
+    twlight_rate = r['twlight_rate']
+    rent_cart_price = r['rent_cart_price']
     thumbnail = r['thumbnail']
+    booking_information = ['booking_information']
     description = r['description']
     website = r['website']
-    type = r['type']
     cost = r['cost']
-    booking_window_days = r['booking_window_days']
     scorecard = r['scorecard']
     rating_google = r['rating_google']
     rating_grint = r['rating_grint']
     thumbnail = r['thumbnail']
-    booking_window_days = r['booking_window_days']
+    
+    
     app_tables.course_info.add_row(
       name=name,
       address=address,
@@ -71,9 +83,7 @@ def update_courses():
       thumbnail =	thumbnail,
       description=description,
       website=website,
-      type=type,
       cost=cost,
-      booking_window_days=booking_window_days,
       scorecard=scorecard,
       rating_google=rating_google,
       rating_grint=rating_grint
