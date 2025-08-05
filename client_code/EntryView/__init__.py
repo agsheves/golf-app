@@ -53,4 +53,3 @@ class EntryView(EntryViewTemplate):
   def link_1_click(self, **event_args):
     from .DetailedView import DetailedView
     alert(content=DetailedView(),large=True, dismissible=True, title='')
-    
