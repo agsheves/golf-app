@@ -11,13 +11,19 @@ from ..EntryView import EntryView
 
 class Homepage(HomepageTemplate):
   def __init__(self, **properties):
+    print(self.multi_select_drop_down_1.selected)  
+    amenities = anvil.server.call('list_all_unique_amenities')
+    self.multi_select_drop_down_1.items = ''
+    self.multi_select_drop_down_1.items = amenities
+    
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run when the form opens.
     self.refresh_entries()
       # Set an event handler on the RepeatingPanel (our 'entries_panel')
     self.entries_panel.set_event_handler('x-delete-entry', self.delete_entry)
-    print(self.entries_panel.get_components())
+    print(self.multi_select_drop_down_1.selected)  
+    
     
     
 
@@ -55,4 +61,20 @@ class Homepage(HomepageTemplate):
     type = self.type_of_search.selected_value
     results = anvil.server.call('search_items', search_text, type)
     self.entries_panel.items = results
+
+  def multi_select_drop_down_1_change(self, **event_args):
+    selected = self.multi_select_drop_down_1.selected
+    print(self.multi_select_drop_down_1.items)  
+    if selected and selected != "Select an amenity...":
+      filtered_courses = anvil.server.call('get_courses_by_amenity', selected)
+      self.entries_panel.items = filtered_courses
+
+  def multi_select_drop_down_1_opened(self, **event_args):
+    """This method is called when the dropdown menu is opened"""
+    pass
+     
+
+  
+  
+
 

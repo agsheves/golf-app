@@ -26,29 +26,38 @@ components:
     type: Button
   - components:
     - components:
-      - layout_properties: {grid_position: 'HONQBR,ATIGFK XIDCXL,TNEFMB'}
+      - layout_properties: {grid_position: 'HONQBR,ATIGFK TJHHVN,CVKOTQ'}
+        name: label_3
+        properties: {text: Search Filter}
+        type: Label
+      - layout_properties: {grid_position: 'XIDCXL,TNEFMB'}
         name: type_of_search
         properties:
           items: [name, state]
         type: DropDown
-      - layout_properties: {grid_position: 'HONQBR,ATIGFK JTUPMT,DJJAMD'}
+      - layout_properties: {grid_position: 'JTUPMT,DJJAMD'}
         name: search_box
         properties: {}
         type: TextBox
-      - components:
-        - layout_properties: {grid_position: 'NAXQVS,WJTMOA'}
-          name: radio_button_1
-          properties: {text: radio_button_1}
-          type: RadioButton
-        layout_properties: {grid_position: 'HONQBR,JMZIIJ'}
-        name: dropdown_search_panel
-        properties: {}
-        type: ColumnPanel
       - event_bindings: {click: search_button_click}
-        layout_properties: {grid_position: 'HONQBR,ATIGFK YCXCVR,CMMFAV'}
+        layout_properties: {grid_position: 'YCXCVR,CMMFAV'}
         name: search_button
         properties: {role: outlined-button, text: Filter}
         type: Button
+      - components:
+        - layout_properties: {grid_position: 'HDGYTT,KIUYDV'}
+          name: label_2
+          properties: {text: Amenitie Filter}
+          type: Label
+        - event_bindings: {change: multi_select_drop_down_1_change, opened: multi_select_drop_down_1_opened}
+          layout_properties: {grid_position: 'HDGYTT,YHBECX'}
+          name: multi_select_drop_down_1
+          properties: {}
+          type: form:dep_wcd0abdykvtrr:MultiSelectDropDown
+        layout_properties: {grid_position: 'LNJEIW,WORZBB'}
+        name: dropdown_search_panel
+        properties: {}
+        type: ColumnPanel
       layout_properties: {grid_position: 'FQPQVJ,QOOPIJ'}
       name: text_search_panel
       properties: {}

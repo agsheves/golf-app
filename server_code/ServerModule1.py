@@ -21,7 +21,7 @@ def search_items(search_text, type):
   return [row for row in app_tables.course_info.search()
           if search_text in row[type].lower()]
 
-  
+@anvil.server.callable  
 def add_entry(entry_dict):
   app_tables.entries.add_row(
     created=datetime.now(),
@@ -113,3 +113,56 @@ def update_courses():
       rating_google = rating_google,
      rating_grint = rating_grint,
     )
+
+@anvil.server.callable
+def list_all_unique_amenities():
+  from anvil.tables import app_tables
+
+  def parse_amenities(amenities_value):
+    if not amenities_value:
+      return []
+    if isinstance(amenities_value, list):
+      return [a.lower().strip() for a in amenities_value if a.strip()]
+    if isinstance(amenities_value, str):
+      cleaned = amenities_value.replace(" and ", ", ")
+      return [item.lower().strip() for item in cleaned.split(",") if item.strip()]
+    return []
+
+  all_amenities = set()
+
+  for row in app_tables.course_info.search():
+    amenities = parse_amenities(row['amenities'])
+    all_amenities.update(amenities)
+
+ 
+
+  return sorted(all_amenities)
+
+@anvil.server.callable  
+def get_courses_by_amenity(amenity):
+  from anvil.tables import app_tables
+  
+  if isinstance(amenity, list):
+    amenity = [a.lower() for a in amenity if isinstance(a, str)]
+  elif isinstance(amenity, str):
+    amenity = [amenity.lower()]
+  else:
+    amenity = []
+
+  results = []
+  for row in app_tables.course_info.search():
+    amenities = row['amenities']
+
+    # Normalize amenities data from each row
+    if isinstance(amenities, str):
+      amenities = [a.strip().lower() for a in amenities.replace(" and ", ",").split(",") if a.strip()]
+    elif isinstance(amenities, list):
+      amenities = [a.lower().strip() for a in amenities if isinstance(a, str)]
+    else:
+      amenities = []
+
+      # ✅ Match if any selected amenity exists in row
+    if any(a in amenities for a in amenity):
+      results.append(row)
+
+  return results
