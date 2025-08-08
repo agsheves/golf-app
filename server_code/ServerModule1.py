@@ -8,9 +8,20 @@ from datetime import datetime
 import anvil.secrets
 import anvil.users
 import json
+import Homepage
 
 
 @anvil.server.callable
+
+def search_items(search_text, type):
+  from anvil.tables import app_tables
+  search_text = search_text.lower()
+
+  # Filter the Data Table
+  return [row for row in app_tables.course_info.search()
+          if search_text in row[type].lower()]
+
+  
 def add_entry(entry_dict):
   app_tables.entries.add_row(
     created=datetime.now(),

@@ -107,7 +107,10 @@ db_schema:
       type: link_single
     server: full
     title: Entries
-dependencies: []
+dependencies:
+- dep_id: dep_wcd0abdykvtrr
+  resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
+  version: {version_tag: v3.2.0}
 name: Database-backed app
 package_name: News_App
 renamed: true

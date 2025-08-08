@@ -24,6 +24,39 @@ components:
       underline: false
       visible: true
     type: Button
+  - components:
+    - components:
+      - layout_properties: {grid_position: 'HONQBR,ATIGFK XIDCXL,TNEFMB'}
+        name: type_of_search
+        properties:
+          items: [name, state]
+        type: DropDown
+      - layout_properties: {grid_position: 'HONQBR,ATIGFK JTUPMT,DJJAMD'}
+        name: search_box
+        properties: {}
+        type: TextBox
+      - components:
+        - layout_properties: {grid_position: 'NAXQVS,WJTMOA'}
+          name: radio_button_1
+          properties: {text: radio_button_1}
+          type: RadioButton
+        layout_properties: {grid_position: 'HONQBR,JMZIIJ'}
+        name: dropdown_search_panel
+        properties: {}
+        type: ColumnPanel
+      - event_bindings: {click: search_button_click}
+        layout_properties: {grid_position: 'HONQBR,ATIGFK YCXCVR,CMMFAV'}
+        name: search_button
+        properties: {role: outlined-button, text: Filter}
+        type: Button
+      layout_properties: {grid_position: 'FQPQVJ,QOOPIJ'}
+      name: text_search_panel
+      properties: {}
+      type: ColumnPanel
+    layout_properties: {grid_position: 'NDVNKD,ZKRGHN'}
+    name: filter_card
+    properties: {role: outlined-card}
+    type: ColumnPanel
   - layout_properties: {grid_position: 'XRGDXR,JQCHKL', slot: title}
     name: entries_panel
     properties: {background: '', border: '', foreground: '', item_template: EntryView, items: null, role: null, spacing_above: small, spacing_below: small, tooltip: '', visible: true}

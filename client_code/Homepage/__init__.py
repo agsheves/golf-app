@@ -7,6 +7,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from ..EntryEdit import EntryEdit
+from ..EntryView import EntryView
 
 class Homepage(HomepageTemplate):
   def __init__(self, **properties):
@@ -49,4 +50,9 @@ class Homepage(HomepageTemplate):
     # Refresh entry to remove the deleted entry from the Homepage
     self.refresh_entries()
 
+  def search_button_click(self, **event_args):
+    search_text = self.search_box.text
+    type = self.type_of_search.selected_value
+    results = anvil.server.call('search_items', search_text, type)
+    self.entries_panel.items = results
 
