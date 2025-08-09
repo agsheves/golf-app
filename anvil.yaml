@@ -49,9 +49,6 @@ db_schema:
       name: amenities
       type: string
     - admin_ui: {width: 200}
-      name: booking_information
-      type: simpleObject
-    - admin_ui: {width: 200}
       name: course_Slope
       type: string
     - admin_ui: {width: 200}

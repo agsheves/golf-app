@@ -51,5 +51,31 @@ class EntryView(EntryViewTemplate):
       self.parent.raise_event('x-delete-entry', entry=self.item)
 
   def link_1_click(self, **event_args):
-    from .DetailedView import DetailedView
-    alert(content=DetailedView(),large=True, dismissible=True, title='')
+    """This method is called when the row is clicked"""
+    from anvil import alert
+    # Create a formatted string with the data
+    details = f"""
+      name: {self.item['name']}
+      address: {self.item['address']}
+      phone_number: {self.item['phone_number']}
+      walking_rates: {self.item['walking_rates']}
+      rating_google: {self.item['rating_google']}
+      weekend_rate: {self.item['weekend_rate']}
+      course_Slope: {self.item['course_Slope']}
+      cost: {self.item['cost']}
+      rent_cart_price: {self.item['rent_cart_price']}
+      website: {self.item['website']}
+      state: {self.item['state']}
+      weekday_rate: {self.item['weekday_rate']}
+      rating_grint: {self.item['rating_grint']}
+      scorecard: {self.item['scorecard']}
+      amenities: {self.item['amenities']}
+      twlight_rate: {self.item['twlight_rate']}
+      rating_golf_pass: {self.item['rating_golf_pass']}
+      description: {self.item['description']}
+      course_length: {self.item['course_length']}
+      thumbnail: {self.item['thumbnail']}
+      zip_code: {self.item['zip_code']}
+      rating: {self.item['rating']}
+      """
+    alert(details, title="Entry Details", large=True, dismissible=True)
