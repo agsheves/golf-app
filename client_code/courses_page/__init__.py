@@ -1,4 +1,4 @@
-from ._anvil_designer import Homepage_copyTemplate
+from ._anvil_designer import courses_pageTemplate
 from anvil import *
 import anvil.google.auth, anvil.google.drive
 from anvil.google.drive import app_files
@@ -10,7 +10,7 @@ from ..EntryEdit import EntryEdit
 from ..EntryView import EntryView
 
 
-class Homepage_copy(Homepage_copyTemplate):
+class courses_page(courses_pageTemplate):
   def __init__(self, **properties):
     print(self.multi_select_drop_down_1.selected)
     amenities = anvil.server.call("list_all_unique_amenities")

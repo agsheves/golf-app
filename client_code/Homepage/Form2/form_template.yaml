@@ -1,0 +1,54 @@
+components:
+- components:
+  - components:
+    - components:
+      - layout_properties: {grid_position: 'HONQBR,ATIGFK TJHHVN,CVKOTQ'}
+        name: label_3
+        properties: {text: Search Filter}
+        type: Label
+      - layout_properties: {grid_position: 'XIDCXL,TNEFMB'}
+        name: type_of_search
+        properties:
+          items: [name, state]
+        type: DropDown
+      - layout_properties: {grid_position: 'JTUPMT,DJJAMD'}
+        name: search_box
+        properties: {}
+        type: TextBox
+      - event_bindings: {click: search_button_click}
+        layout_properties: {grid_position: 'YCXCVR,CMMFAV'}
+        name: search_button
+        properties: {role: outlined-button, text: Filter}
+        type: Button
+      - components:
+        - layout_properties: {grid_position: 'HDGYTT,KIUYDV'}
+          name: label_2
+          properties: {text: Amenitie Filter}
+          type: Label
+        - event_bindings: {change: multi_select_drop_down_1_change, opened: multi_select_drop_down_1_opened}
+          layout_properties: {grid_position: 'HDGYTT,YHBECX'}
+          name: multi_select_drop_down_1
+          properties: {}
+          type: form:dep_wcd0abdykvtrr:MultiSelectDropDown
+        layout_properties: {grid_position: 'LNJEIW,WORZBB'}
+        name: dropdown_search_panel
+        properties: {}
+        type: ColumnPanel
+      layout_properties: {grid_position: 'FQPQVJ,QOOPIJ'}
+      name: text_search_panel
+      properties: {}
+      type: ColumnPanel
+    layout_properties: {grid_position: 'NDVNKD,ZKRGHN'}
+    name: filter_card
+    properties: {role: outlined-card}
+    type: ColumnPanel
+  - layout_properties: {grid_position: 'XRGDXR,JQCHKL', slot: title}
+    name: entries_panel
+    properties: {background: '', border: '', foreground: '', item_template: EntryView, items: null, role: null, spacing_above: small, spacing_below: small, tooltip: '', visible: true}
+    type: RepeatingPanel
+  layout_properties: {grid_position: 'SYSKSR,KBJERR'}
+  name: content_panel
+  properties: {col_widths: '{}'}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

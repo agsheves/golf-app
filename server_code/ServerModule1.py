@@ -116,6 +116,7 @@ def update_courses():
 
 @anvil.server.callable
 def list_all_unique_amenities():
+  
   from anvil.tables import app_tables
 
   def parse_amenities(amenities_value):

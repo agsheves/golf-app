@@ -104,6 +104,17 @@ db_schema:
       type: link_single
     server: full
     title: Entries
+  images:
+    client: search
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: image
+      type: media
+    - admin_ui: {order: 1, width: 200}
+      name: caption
+      type: string
+    server: full
+    title: images
 dependencies:
 - dep_id: dep_wcd0abdykvtrr
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
@@ -113,7 +124,7 @@ package_name: News_App
 renamed: true
 runtime_options:
   client_version: '3'
-  server_spec: null
+  server_spec: {base: python310-minimal}
   server_spec_disabled: {base: python310-minimal, requirements: ''}
   server_version: python3-sandbox
   version: 2
