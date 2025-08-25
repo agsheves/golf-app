@@ -27,9 +27,6 @@ db_schema:
     - admin_ui: {width: 200}
       name: address
       type: string
-    - admin_ui: {order: 19, width: 200}
-      name: description
-      type: string
     - admin_ui: {order: 11.875, width: 200}
       name: rating_google
       type: string
@@ -42,41 +39,26 @@ db_schema:
     - admin_ui: {order: 20, width: 200}
       name: thumbnail
       type: string
-    - admin_ui: {order: 21, width: 200}
-      name: zip_code
-      type: string
     - admin_ui: {width: 200}
       name: amenities
       type: string
     - admin_ui: {width: 200}
-      name: course_Slope
+      name: booking_link
+      type: simpleObject
+    - admin_ui: {width: 200}
+      name: course_length_forward
       type: string
     - admin_ui: {width: 200}
-      name: course_length
+      name: course_length_tips
       type: string
     - admin_ui: {width: 200}
-      name: rating
+      name: course_slope
       type: string
     - admin_ui: {width: 200}
-      name: rating_golf_pass
+      name: rating_golf_now
       type: string
     - admin_ui: {width: 200}
-      name: rent_cart_price
-      type: string
-    - admin_ui: {width: 200}
-      name: twlight_rate
-      type: string
-    - admin_ui: {width: 200}
-      name: state
-      type: string
-    - admin_ui: {width: 200}
-      name: walking_rates
-      type: string
-    - admin_ui: {width: 200}
-      name: weekday_rate
-      type: string
-    - admin_ui: {width: 200}
-      name: weekend_rate
+      name: rent_cart_cost
       type: string
     server: full
     title: course_info
@@ -115,6 +97,32 @@ db_schema:
       type: string
     server: full
     title: images
+  users:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: email
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: enabled
+      type: bool
+    - admin_ui: {order: 2, width: 200}
+      name: last_login
+      type: datetime
+    - admin_ui: {order: 3, width: 200}
+      name: password_hash
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: n_password_failures
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: confirmed_email
+      type: bool
+    - admin_ui: {order: 6, width: 200}
+      name: remembered_logins
+      type: simpleObject
+    server: full
+    title: Users
 dependencies:
 - dep_id: dep_wcd0abdykvtrr
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
@@ -184,5 +192,8 @@ services:
       writersCanShare: true
   server_config: {enc_delegation_refresh_token: Z4Xte7z0mk5JdFtEnuWDD8gQuSMRGK366X2XTZOmQHL3i1vfjR0Twwp/32M1B9Usmp3w/cyj4NxQmiAIStecT3WNAoqShoNTj2zfOU0rRQqGFKqAbfQXNz6hZHALKg+Fu3VkprFZIcL5XfFstE16YQpdyyNumJWr+/CSapvmoYi+zgDreMznVKwpYx6pjHG7Bkq1Gb2f2ZFxvgX6fmry127ZoGvJwpep5Jd1TAFtQ7/gotXsoY/zJcVcQKTL7w8h1pKis+wfOKxurMh5mKUxNQzS+USjqSfFw0xMYHjF94Dvji4LQ/Z3ep1Or8AKQg==}
   source: /runtime/services/google.yml
+- client_config: {allow_remember_me: true, allow_signup: false, confirm_email: true, enable_automatically: true, remember_me_days: 1, use_email: true}
+  server_config: {user_table: users}
+  source: /runtime/services/anvil/users.yml
 startup: {module: Homepage, type: form}
 startup_form: null

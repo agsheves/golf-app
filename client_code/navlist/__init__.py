@@ -1,5 +1,6 @@
 from ._anvil_designer import navlistTemplate
 from anvil import *
+import anvil.users
 import anvil.server
 import anvil.google.auth, anvil.google.drive
 from anvil.google.drive import app_files
@@ -25,3 +26,7 @@ class navlist(navlistTemplate):
   def link_3_click(self, **event_args):
     open_form('About')
     pass
+
+  def link_4_click(self, **event_args):
+    open_form('Contact')
+  pass

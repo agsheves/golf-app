@@ -17,10 +17,19 @@ components:
     name: spacer_2
     properties: {height: '16'}
     type: Spacer
-  - event_bindings: {click: link_3_click}
+  - components: []
+    event_bindings: {click: link_3_click}
     layout_properties: {}
     name: link_1_copy_copy
     properties: {background: 'theme:Primary', foreground: 'theme:On Primary', text: About}
+    type: Link
+  - name: spacer_2_copy
+    properties: {height: '16'}
+    type: Spacer
+  - event_bindings: {click: link_4_click}
+    layout_properties: {}
+    name: link_1_copy_copy_copy
+    properties: {background: 'theme:Primary', foreground: 'theme:On Primary', text: Contact Us}
     type: Link
   layout_properties: {grid_position: 'WYXIXT,RYEWGI'}
   name: linear_panel_1
