@@ -122,10 +122,11 @@ python manage.py runserver 0.0.0.0:5000
 
 ### Database Configuration
 - **Uses DATABASE_URL**: Automatically configured for both development and production environments
+- **SSL Enforced**: Secure connections with `ssl_require=True` to prevent plaintext fallback
 - **Connection Pooling**: 600-second connection max age for optimal performance
-- **Health Checks**: Automatic connection health checks prevent SSL connection errors
+- **Health Checks**: Automatic connection health checks (`conn_health_checks=True`) prevent SSL connection drops
 - **Seamless Deployment**: No manual database configuration needed
-- **Fallback Support**: Falls back to individual PG* variables if DATABASE_URL unavailable
+- **Fallback Support**: Falls back to individual PG* variables with SSL enforcement if DATABASE_URL unavailable
 
 ### Production Database & Demo Data
 - **Automatic Setup**: Production database migrations run automatically during deployment
@@ -188,10 +189,10 @@ The database includes:
 ## Recent Changes
 
 ### 2025-10-14: Production SSL Connection Fix
-- ✅ **Fixed SSL connection errors**: Removed `ssl_require=True` that caused "SSL connection closed unexpectedly" errors
-- ✅ **Added connection health checks**: Automatic database connection recovery with `CONN_HEALTH_CHECKS=True`
+- ✅ **Fixed SSL connection errors**: Added `conn_health_checks=True` for automatic connection recovery
+- ✅ **Maintained SSL security**: Kept `ssl_require=True` to prevent plaintext connection fallback
 - ✅ **Improved connection pooling**: 600-second connection max age for optimal performance
-- ✅ **Production ready**: Database configuration now stable for production deployments
+- ✅ **Production ready**: Database configuration stable with SSL enforced and automatic reconnection
 
 ### 2025-10-14: Deployment Configuration Fixed
 - ✅ **Fixed idempotent deployments**: Build command now uses `--noinput` flag for migrations
