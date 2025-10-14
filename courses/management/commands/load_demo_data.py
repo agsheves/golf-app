@@ -1,5 +1,4 @@
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
 from courses.models import Amenity, Course, CourseImage
 
 
@@ -265,8 +264,6 @@ class Command(BaseCommand):
                 'amenities': ['Driving Range', 'Pro Shop', 'Golf Carts', 'Restaurant'],
             },
         ]
-        
-        admin_user = User.objects.filter(is_superuser=True).first()
         
         for course_data in courses_data:
             amenity_names = course_data.pop('amenities')
