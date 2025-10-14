@@ -111,8 +111,14 @@ python manage.py runserver 0.0.0.0:5000
 ## Deployment Configuration
 
 - **Type**: Autoscale (stateless web app)
-- **Build**: `python manage.py migrate && python manage.py seed_demo_data && python manage.py collectstatic --noinput`
+- **Build**: `python manage.py migrate --no-input && python manage.py seed_demo_data && python manage.py collectstatic --no-input`
 - **Run**: `gunicorn --bind=0.0.0.0:5000 --reuse-port golf_registry.wsgi:application`
+
+### Idempotent Deployments
+- **Migrations**: Use `--no-input` flag to handle existing tables gracefully
+- **Demo Data**: `seed_demo_data` uses `get_or_create()` to prevent duplicates
+- **Safe Re-deployments**: Build command can run multiple times without errors
+- **Persistent Database**: Database persists across deployments, so existing data is preserved
 
 ### Database Configuration
 - **Uses DATABASE_URL**: Automatically configured for both development and production environments
@@ -123,15 +129,16 @@ python manage.py runserver 0.0.0.0:5000
 ### Production Database & Demo Data
 - **Automatic Setup**: Production database migrations run automatically during deployment
 - **Demo Data Seeding**: `seed_demo_data` management command populates sample courses
-- **No Duplicates**: Command checks if courses exist before seeding
+- **Idempotent Command**: Safely skips existing courses, no duplicates created
 - **Demo Courses Included**:
-  - **Pebble Beach Golf Links** (Pebble Beach, CA) - 4.8 rating, **$675** green fee, 6,828 yards, slope 143
-  - **Torrey Pines Golf Course** (La Jolla, CA) - 4.7 rating, **$306** green fee, 7,804 yards, slope 145
-  - Amenities: Driving Range, Pro Shop, Restaurant, Clubhouse
+  - **Pebble Beach Golf Links** (Pebble Beach, CA) - 4.8 rating, **$575-$650** green fee, 6,828 yards, slope 145
+  - **Torrey Pines Golf Course** (La Jolla, CA) - 4.7 rating, **$252-$290** green fee, 7,765 yards, slope 144
+  - **Augusta National**, **Pinehurst No. 2**, **TPC Sawgrass**, and 7 more championship courses
+  - Amenities: Driving Range, Pro Shop, Restaurant, Golf Carts, and more
 
 ### Deploying to Production:
-1. **Click Deploy** - Migrations and demo data seed automatically
-2. **Create admin user**: Run `python manage.py createsuperuser` after deployment
+1. **Click Deploy** - Migrations and demo data seed automatically (idempotent, safe to redeploy)
+2. **Create admin user**: Run `python manage.py createsuperuser` after first deployment
 3. **Optional**: Set `DEBUG=False` environment variable to disable debug mode
 
 The app uses DATABASE_URL for seamless database connectivity across all environments.
@@ -175,6 +182,20 @@ The database includes:
 - Various amenities (Driving Range, Pro Shop, Restaurant, Clubhouse)
 
 ## Recent Changes
+
+### 2025-10-14: Deployment Configuration Fixed
+- ✅ **Fixed idempotent deployments**: Build command now uses `--no-input` flag for migrations
+- ✅ **Renamed command**: Changed `load_demo_data` to `seed_demo_data` to match deployment config
+- ✅ **Safe re-deployments**: Migrations and data seeding handle existing data gracefully
+- ✅ **Persistent database**: Database state preserved across deployments
+- ✅ **Comprehensive tests**: 17 tests covering models, views, admin, and integration workflows
+
+### 2025-10-14: Demo Data & Testing
+- ✅ **Expanded demo dataset**: 12 championship golf courses with realistic data
+- ✅ **Idempotent seeding**: Uses `get_or_create()` to prevent duplicate data
+- ✅ **Full test coverage**: Model tests, view tests, admin tests, integration tests
+- ✅ **Enhanced templates**: Course detail page displays all information (pricing, ratings, amenities, course specs)
+- ✅ **Cache-control headers**: Prevents caching issues during development
 
 ### 2025-10-14: Database Configuration Fixed
 - ✅ **Fixed deployment authentication**: Now uses DATABASE_URL for seamless dev/production connectivity
