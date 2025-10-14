@@ -93,7 +93,11 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 
 if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
+        'default': dj_database_url.parse(
+            DATABASE_URL, 
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
 else:
     # Fallback to individual PG* variables if DATABASE_URL not available
@@ -105,9 +109,8 @@ else:
             'PASSWORD': os.getenv('PGPASSWORD'),
             'HOST': os.getenv('PGHOST'),
             'PORT': os.getenv('PGPORT'),
-            'OPTIONS': {
-                'sslmode': 'require',
-            },
+            'CONN_MAX_AGE': 600,
+            'CONN_HEALTH_CHECKS': True,
         }
     }
 

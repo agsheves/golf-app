@@ -122,7 +122,8 @@ python manage.py runserver 0.0.0.0:5000
 
 ### Database Configuration
 - **Uses DATABASE_URL**: Automatically configured for both development and production environments
-- **SSL Enabled**: Secure connections with `sslmode=require`
+- **Connection Pooling**: 600-second connection max age for optimal performance
+- **Health Checks**: Automatic connection health checks prevent SSL connection errors
 - **Seamless Deployment**: No manual database configuration needed
 - **Fallback Support**: Falls back to individual PG* variables if DATABASE_URL unavailable
 
@@ -185,6 +186,12 @@ The database includes:
 - Various amenities (Driving Range, Pro Shop, Restaurant, Clubhouse)
 
 ## Recent Changes
+
+### 2025-10-14: Production SSL Connection Fix
+- ✅ **Fixed SSL connection errors**: Removed `ssl_require=True` that caused "SSL connection closed unexpectedly" errors
+- ✅ **Added connection health checks**: Automatic database connection recovery with `CONN_HEALTH_CHECKS=True`
+- ✅ **Improved connection pooling**: 600-second connection max age for optimal performance
+- ✅ **Production ready**: Database configuration now stable for production deployments
 
 ### 2025-10-14: Deployment Configuration Fixed
 - ✅ **Fixed idempotent deployments**: Build command now uses `--noinput` flag for migrations
