@@ -114,11 +114,21 @@ python manage.py runserver 0.0.0.0:5000
 - **Build**: `python manage.py collectstatic --noinput`
 - **Run**: `gunicorn --bind=0.0.0.0:5000 --reuse-port golf_registry.wsgi:application`
 
+### Production Database & Demo Data
+- **Automatic Seeding**: Production database will be automatically populated with demo courses on first deployment
+- **Data Migration**: `0002_seed_demo_data.py` creates 2 sample courses (Pebble Beach, Torrey Pines) and 3 amenities
+- **No Duplicates**: Migration checks if courses exist before seeding, preventing duplicate data
+- **Demo Courses Included**:
+  - Pebble Beach Golf Links (CA) - 4.8 rating, $575
+  - Torrey Pines Golf Course (CA) - 4.7 rating, $252
+  - Amenities: Driving Range, Pro Shop, Restaurant
+
 ### Before Deploying to Production:
 1. Set `SECRET_KEY` environment variable to a unique random value
 2. Set `DEBUG=False` 
 3. Set `ALLOWED_HOSTS` to your domain (e.g., `yourdomain.com,www.yourdomain.com`)
-4. Change the admin password: `python manage.py changepassword admin`
+4. **First Deploy**: Migrations will auto-run and seed demo data
+5. Create admin user: `python manage.py createsuperuser`
 
 ## Common Commands
 
@@ -161,6 +171,12 @@ The database includes:
 
 ## Recent Changes
 
+### 2025-10-14: Production Data Migration Added
+- ✅ Created data migration (`0002_seed_demo_data.py`) for automatic demo data seeding
+- ✅ Production database will auto-populate with Pebble Beach and Torrey Pines on first deployment
+- ✅ Migration includes duplicate prevention (checks if courses exist before seeding)
+- ✅ Updated deployment documentation with database seeding information
+
 ### 2025-10-14: Initial Build
 - ✅ Django 5.2.7 project setup with PostgreSQL
 - ✅ Course management models with approval workflow
@@ -169,6 +185,7 @@ The database includes:
 - ✅ Web scraper framework with staging table
 - ✅ Deployment configuration for Replit autoscale
 - ✅ Sample data for Pebble Beach and Torrey Pines
+- ✅ Security implementation with DEBUG-aware SECRET_KEY management
 
 ## Next Steps / Enhancements
 
