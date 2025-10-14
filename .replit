@@ -41,4 +41,4 @@ externalPort = 3000
 [deployment]
 deploymentTarget = "autoscale"
 run = ["gunicorn", "--bind=0.0.0.0:5000", "--reuse-port", "golf_registry.wsgi:application"]
-build = ["bash", "-c", "python manage.py migrate --no-input && python manage.py seed_demo_data && python manage.py collectstatic --no-input"]
+build = ["bash", "-c", "python manage.py migrate --noinput && python manage.py seed_demo_data && python manage.py collectstatic --noinput"]

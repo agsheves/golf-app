@@ -111,11 +111,11 @@ python manage.py runserver 0.0.0.0:5000
 ## Deployment Configuration
 
 - **Type**: Autoscale (stateless web app)
-- **Build**: `python manage.py migrate --no-input && python manage.py seed_demo_data && python manage.py collectstatic --no-input`
+- **Build**: `python manage.py migrate --noinput && python manage.py seed_demo_data && python manage.py collectstatic --noinput`
 - **Run**: `gunicorn --bind=0.0.0.0:5000 --reuse-port golf_registry.wsgi:application`
 
 ### Idempotent Deployments
-- **Migrations**: Use `--no-input` flag to handle existing tables gracefully
+- **Migrations**: Use `--noinput` flag to handle existing tables gracefully
 - **Demo Data**: `seed_demo_data` uses `get_or_create()` to prevent duplicates
 - **Safe Re-deployments**: Build command can run multiple times without errors
 - **Persistent Database**: Database persists across deployments, so existing data is preserved
@@ -148,6 +148,9 @@ The app uses DATABASE_URL for seamless database connectivity across all environm
 ```bash
 # Create superuser
 python manage.py createsuperuser
+
+# Load demo golf course data
+python manage.py seed_demo_data
 
 # Run scraper
 python manage.py scrape_courses
@@ -184,7 +187,7 @@ The database includes:
 ## Recent Changes
 
 ### 2025-10-14: Deployment Configuration Fixed
-- ✅ **Fixed idempotent deployments**: Build command now uses `--no-input` flag for migrations
+- ✅ **Fixed idempotent deployments**: Build command now uses `--noinput` flag for migrations
 - ✅ **Renamed command**: Changed `load_demo_data` to `seed_demo_data` to match deployment config
 - ✅ **Safe re-deployments**: Migrations and data seeding handle existing data gracefully
 - ✅ **Persistent database**: Database state preserved across deployments
