@@ -111,24 +111,30 @@ python manage.py runserver 0.0.0.0:5000
 ## Deployment Configuration
 
 - **Type**: Autoscale (stateless web app)
-- **Build**: `python manage.py collectstatic --noinput`
+- **Build**: `python manage.py migrate && python manage.py seed_demo_data && python manage.py collectstatic --noinput`
 - **Run**: `gunicorn --bind=0.0.0.0:5000 --reuse-port golf_registry.wsgi:application`
+
+### Database Configuration
+- **Uses DATABASE_URL**: Automatically configured for both development and production environments
+- **SSL Enabled**: Secure connections with `sslmode=require`
+- **Seamless Deployment**: No manual database configuration needed
+- **Fallback Support**: Falls back to individual PG* variables if DATABASE_URL unavailable
 
 ### Production Database & Demo Data
 - **Automatic Setup**: Production database migrations run automatically during deployment
 - **Demo Data Seeding**: `seed_demo_data` management command populates sample courses
 - **No Duplicates**: Command checks if courses exist before seeding
 - **Demo Courses Included**:
-  - Pebble Beach Golf Links (CA) - 4.8 rating, $575
-  - Torrey Pines Golf Course (CA) - 4.7 rating, $252
-  - Amenities: Driving Range, Pro Shop, Restaurant
+  - **Pebble Beach Golf Links** (Pebble Beach, CA) - 4.8 rating, **$675** green fee, 6,828 yards, slope 143
+  - **Torrey Pines Golf Course** (La Jolla, CA) - 4.7 rating, **$306** green fee, 7,804 yards, slope 145
+  - Amenities: Driving Range, Pro Shop, Restaurant, Clubhouse
 
 ### Deploying to Production:
 1. **Click Deploy** - Migrations and demo data seed automatically
 2. **Create admin user**: Run `python manage.py createsuperuser` after deployment
 3. **Optional**: Set `DEBUG=False` environment variable to disable debug mode
 
-The app uses the existing `SECRET_KEY` from Replit secrets and includes SSL database connections.
+The app uses DATABASE_URL for seamless database connectivity across all environments.
 
 ## Common Commands
 
@@ -164,17 +170,19 @@ python manage.py shell
 ## Sample Data
 
 The database includes:
-- **Pebble Beach Golf Links** (Pebble Beach, CA)
-- **Torrey Pines Golf Course** (La Jolla, CA)
-- Various amenities (Driving Range, Pro Shop, Restaurant)
+- **Pebble Beach Golf Links** (Pebble Beach, CA) - $675, 4.8 rating
+- **Torrey Pines Golf Course** (La Jolla, CA) - $306, 4.7 rating
+- Various amenities (Driving Range, Pro Shop, Restaurant, Clubhouse)
 
 ## Recent Changes
 
-### 2025-10-14: Production Deployment Fixed
-- ✅ Created `seed_demo_data` management command for reliable demo data seeding
-- ✅ Fixed deployment build process: migrations → seed data → collect static files
-- ✅ Added SSL database configuration for secure connections
-- ✅ Production database auto-populates with demo courses on deployment
+### 2025-10-14: Database Configuration Fixed
+- ✅ **Fixed deployment authentication**: Now uses DATABASE_URL for seamless dev/production connectivity
+- ✅ Updated settings.py to use dj-database-url for consistent database parsing
+- ✅ Fresh database created with real demo course data
+- ✅ Demo courses added: Pebble Beach ($675) and Torrey Pines ($306) with accurate information
+- ✅ SSL connections enabled for all environments
+- ✅ Deployment build process verified: migrations → seed data → collect static files
 
 ### 2025-10-14: Simplified Configuration
 - ✅ Streamlined settings to work the same in dev and production
