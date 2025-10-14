@@ -34,7 +34,9 @@
     {% for course in courses %}
     <div class="col-md-6 col-lg-4 mb-4">
         <div class="card course-card h-100">
-            {% if course.thumbnail %}
+            {% if course.images.all %}
+            <img src="{{ course.images.first.image.url }}" class="card-img-top course-thumbnail" alt="{{ course.name }}">
+            {% elif course.thumbnail %}
             <img src="{{ course.thumbnail }}" class="card-img-top course-thumbnail" alt="{{ course.name }}">
             {% else %}
             <div class="card-img-top course-thumbnail bg-success d-flex align-items-center justify-content-center">

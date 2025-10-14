@@ -3,6 +3,11 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 </div>
 <div class="modal-body">
+    {% if course.images.all %}
+    <img src="{{ course.images.first.image.url }}" class="img-fluid mb-3" alt="{{ course.name }}">
+    {% elif course.thumbnail %}
+    <img src="{{ course.thumbnail }}" class="img-fluid mb-3" alt="{{ course.name }}">
+    {% endif %}
     <div class="row">
         <div class="col-md-6">
             <h6>Location</h6>
