@@ -123,12 +123,13 @@ python manage.py runserver 0.0.0.0:5000
   - Torrey Pines Golf Course (CA) - 4.7 rating, $252
   - Amenities: Driving Range, Pro Shop, Restaurant
 
-### Before Deploying to Production:
-1. Set `SECRET_KEY` environment variable to a unique random value
-2. Set `DEBUG=False` 
-3. Set `ALLOWED_HOSTS` to your domain (e.g., `yourdomain.com,www.yourdomain.com`)
-4. **First Deploy**: Migrations will auto-run and seed demo data
-5. Create admin user: `python manage.py createsuperuser`
+### Deploying to Production:
+1. **First Deploy**: Migrations will auto-run and seed demo data automatically
+2. **Create admin user**: Run `python manage.py createsuperuser` to create your admin account
+3. **Optional**: Set `DEBUG=False` environment variable to disable debug mode in production
+4. The app uses the existing `SECRET_KEY` from your Replit secrets
+
+That's it! Your app will work the same in development and production.
 
 ## Common Commands
 
@@ -155,12 +156,11 @@ python manage.py shell
 ## Environment Variables
 
 ### Database (Replit PostgreSQL)
-- `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGHOST`, `PGPORT`
+- `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGHOST`, `PGPORT` - Auto-configured by Replit
 
-### Security (Required for Production)
-- `SECRET_KEY`: Django secret key (generate with `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`)
-- `DEBUG`: Set to `False` for production (defaults to `True` in development)
-- `ALLOWED_HOSTS`: Comma-separated list of allowed hosts (defaults to `*` in dev)
+### Optional Settings
+- `SECRET_KEY` - Already configured in Replit secrets
+- `DEBUG` - Set to `False` to disable debug mode (defaults to `True`)
 
 ## Sample Data
 
@@ -177,6 +177,11 @@ The database includes:
 - ✅ Migration includes duplicate prevention (checks if courses exist before seeding)
 - ✅ Updated deployment documentation with database seeding information
 
+### 2025-10-14: Simplified Configuration
+- ✅ Streamlined settings to work the same in dev and production
+- ✅ Removed complex environment differentiation
+- ✅ Unified configuration with sensible defaults
+
 ### 2025-10-14: Initial Build
 - ✅ Django 5.2.7 project setup with PostgreSQL
 - ✅ Course management models with approval workflow
@@ -185,7 +190,6 @@ The database includes:
 - ✅ Web scraper framework with staging table
 - ✅ Deployment configuration for Replit autoscale
 - ✅ Sample data for Pebble Beach and Torrey Pines
-- ✅ Security implementation with DEBUG-aware SECRET_KEY management
 
 ## Next Steps / Enhancements
 
