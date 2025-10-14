@@ -1,65 +1,182 @@
-# Golf Course Registry - Anvil Application
+# Golf Course Registry
 
 ## Project Overview
-This is an **Anvil web application** - a golf course directory/registry that allows users to browse, search, and view golf course information including ratings, amenities, contact details, and more.
+A Django-based web application for discovering and managing public golf courses. Features a responsive frontend with search/filter capabilities, an admin approval workflow, and web scraping tools to gather course data.
 
-## Important Notice: Anvil Platform Dependency
-**This application is built with Anvil and cannot run in a standard Replit environment.**
+## Live Application
+- **Public Site**: Browse approved golf courses at the root URL (`/`)
+- **Admin Panel**: Manage courses and review imports at `/admin`
+  - **First-time setup**: Create admin user with `python manage.py createsuperuser`
+  - Use a strong, unique password for production!
 
-Anvil is a proprietary Python web framework that requires:
-- Anvil's cloud runtime environment
-- Anvil's proprietary UI framework
-- Anvil's data tables service (cloud database)
-- Anvil's Google Drive integration service
-- Anvil's authentication service
+## Key Features
 
-## Application Features
-- Golf course listing and search
-- Filter courses by amenities
-- View detailed course information (ratings, contact info, amenities, etc.)
-- Integration with Google Sheets for course data
-- User authentication system
-- Admin capabilities for managing course entries
+### Public Frontend
+- **Responsive Card Layout**: Mobile and desktop optimized using Bootstrap 5
+- **Search & Filter**: Find courses by name, location, state, or amenities
+- **Course Cards**: Display key info (name, location, rating, pricing)
+- **Detail Views**: HTMX-powered modal for quick course details
+- **Golf Flag Icons**: Default visual for courses without thumbnails
 
-## Database Schema
-The app uses Anvil Data Tables with the following tables:
-- **course_info**: Main table for golf course data
-- **categories**: Course categories
-- **entries**: General entries/posts
-- **images**: Image gallery for homepage carousel
-- **users**: User authentication and profiles
+### Admin Workflow
+- **Approval System**: Review and approve/reject imported courses
+- **Bulk Actions**: Approve or reject multiple courses at once
+- **Import Management**: Convert ImportedCourse staging data to live Course records
+- **Custom Filters**: Filter by status, state, review date
+- **Amenity Management**: Create and assign amenities to courses
 
-## How to Run This Application
+### Web Scraper
+- **Management Command**: `python manage.py scrape_courses`
+- **Staging Table**: ImportedCourse stores scraped data for review
+- **Data Structure**: JSON raw_data field preserves original scraped content
+- **Source Tracking**: Records source URL and type (scraper/manual/API)
 
-### Option 1: Run on Anvil (Recommended)
-1. Go to [Anvil Editor](https://anvil.works/build)
-2. Sign up for a free Anvil account
-3. Click "Clone from GitHub"
-4. Enter this repository's URL
-5. The app will open in the Anvil Editor
-6. Click the "Run" button to test the app
-7. Use "Publish" to deploy it online
-
-### Option 2: Convert to Standard Python Web App (Significant Effort)
-To run this on Replit, you would need to:
-1. Rebuild the UI using a standard Python web framework (Flask, Django, Streamlit, etc.)
-2. Replace Anvil Data Tables with PostgreSQL or another database
-3. Reimplement all server functions as standard Python code
-4. Recreate the Google Sheets integration using standard Google APIs
-5. Rebuild the authentication system
-
-This would essentially be creating a new application from scratch.
+## Tech Stack
+- **Framework**: Django 5.2.7
+- **Database**: PostgreSQL (Replit built-in)
+- **Frontend**: Bootstrap 5 + HTMX for dynamic interactions
+- **Static Files**: WhiteNoise for serving in production
+- **Package Manager**: uv (Python)
 
 ## Project Structure
-- `client_code/`: Frontend forms and UI components (Anvil-specific)
-- `server_code/`: Backend server functions
-- `theme/`: Custom styling and assets
-- `anvil.yaml`: Anvil app configuration and database schema
+
+```
+golf_registry/          # Django project settings
+├── settings.py        # Database, apps, middleware config
+├── urls.py           # URL routing
+└── wsgi.py           # WSGI application
+
+courses/               # Core app - course data & models
+├── models.py         # Course, ImportedCourse, Amenity, CourseImage
+├── admin.py          # Custom admin with approval actions
+└── migrations/       # Database migrations
+
+frontend/              # Public-facing views and templates
+├── views.py          # course_list, course_detail
+├── templates/
+│   └── frontend/
+│       ├── base.html
+│       ├── course_list.html
+│       ├── course_detail.html
+│       └── course_detail_modal.html
+└── static/           # CSS, JS (currently using CDN)
+
+scraper/               # Data collection app
+└── management/
+    └── commands/
+        └── scrape_courses.py
+```
+
+## Database Models
+
+### Course (Approved Courses)
+- **Status**: pending, approved, rejected, suppressed
+- **Basic Info**: name, address, city, state, zip_code
+- **Contact**: phone_number, website, booking_link
+- **Course Details**: length, slope, scorecard
+- **Ratings**: Google, Golf Now, The Grint
+- **Pricing**: green fee cost, cart rental cost
+- **Amenities**: Many-to-many relationship
+- **Moderation**: reviewed_by, reviewed_at, moderation_notes
+
+### ImportedCourse (Staging)
+- Stores scraped/imported data before approval
+- **raw_data**: JSON field with original scraped content
+- **source**: scraper, manual, or API
+- **processed**: Boolean flag when converted to Course
+
+### Amenity
+- Reusable amenities (Driving Range, Pro Shop, Restaurant, etc.)
+- Many-to-many with courses
+
+### CourseImage
+- Multiple images per course
+- Primary image flag for thumbnails
+
+## Admin Workflow
+
+1. **Scrape Data**: Run `python manage.py scrape_courses`
+2. **Review Imports**: Go to Admin → Imported Courses
+3. **Create Courses**: Select imports → Actions → "Create courses from selected imports"
+4. **Approve**: Go to Admin → Courses → Select pending → Actions → "Approve selected courses"
+5. **Publish**: Approved courses appear on public site
+
+## Running Locally
+
+The Django server runs automatically via the configured workflow:
+```bash
+python manage.py runserver 0.0.0.0:5000
+```
+
+## Deployment Configuration
+
+- **Type**: Autoscale (stateless web app)
+- **Build**: `python manage.py collectstatic --noinput`
+- **Run**: `gunicorn --bind=0.0.0.0:5000 --reuse-port golf_registry.wsgi:application`
+
+### Before Deploying to Production:
+1. Set `SECRET_KEY` environment variable to a unique random value
+2. Set `DEBUG=False` 
+3. Set `ALLOWED_HOSTS` to your domain (e.g., `yourdomain.com,www.yourdomain.com`)
+4. Change the admin password: `python manage.py changepassword admin`
+
+## Common Commands
+
+```bash
+# Create superuser
+python manage.py createsuperuser
+
+# Run scraper
+python manage.py scrape_courses
+
+# Make migrations
+python manage.py makemigrations
+
+# Apply migrations
+python manage.py migrate
+
+# Collect static files
+python manage.py collectstatic
+
+# Open Django shell
+python manage.py shell
+```
+
+## Environment Variables
+
+### Database (Replit PostgreSQL)
+- `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGHOST`, `PGPORT`
+
+### Security (Required for Production)
+- `SECRET_KEY`: Django secret key (generate with `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`)
+- `DEBUG`: Set to `False` for production (defaults to `True` in development)
+- `ALLOWED_HOSTS`: Comma-separated list of allowed hosts (defaults to `*` in dev)
+
+## Sample Data
+
+The database includes:
+- **Pebble Beach Golf Links** (Pebble Beach, CA)
+- **Torrey Pines Golf Course** (La Jolla, CA)
+- Various amenities (Driving Range, Pro Shop, Restaurant)
 
 ## Recent Changes
-- 2025-10-13: Imported from GitHub to Replit
 
-## Notes
-- The app integrates with a Google Sheet named "Golf Corse Registry" for data
-- Uses Anvil Extras dependency (v3.2.0)
-- Configured for Python 3.10 runtime
+### 2025-10-14: Initial Build
+- ✅ Django 5.2.7 project setup with PostgreSQL
+- ✅ Course management models with approval workflow
+- ✅ Responsive Bootstrap 5 frontend with HTMX
+- ✅ Custom Django admin with bulk approval actions
+- ✅ Web scraper framework with staging table
+- ✅ Deployment configuration for Replit autoscale
+- ✅ Sample data for Pebble Beach and Torrey Pines
+
+## Next Steps / Enhancements
+
+1. **Enhanced Scraper**: Add real scraping logic for golf course websites
+2. **Image Uploads**: Enable course image uploads via admin
+3. **Geolocation**: Add map view and distance-based search
+4. **User Reviews**: Allow public users to rate and review courses
+5. **Booking Integration**: Connect to tee time booking APIs
+6. **Email Notifications**: Alert admins when new imports arrive
+7. **Advanced Filters**: Course type, difficulty, price ranges
+8. **Mobile App**: Consider React Native or PWA for mobile experience
