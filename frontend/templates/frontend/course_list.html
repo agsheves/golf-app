@@ -1,0 +1,82 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+<div class="filter-section">
+    <h4>Search & Filter</h4>
+    <form method="get" class="row g-3">
+        <div class="col-md-4">
+            <input type="text" name="search" class="form-control" placeholder="Search courses..." value="{{ search_query }}">
+        </div>
+        <div class="col-md-3">
+            <select name="state" class="form-select">
+                <option value="">All States</option>
+                {% for state in states %}
+                    <option value="{{ state }}" {% if state == selected_state %}selected{% endif %}>{{ state }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="amenity" class="form-select" multiple>
+                {% for amenity in amenities %}
+                    <option value="{{ amenity.id }}" {% if amenity.id in selected_amenities %}selected{% endif %}>{{ amenity.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100">Search</button>
+        </div>
+    </form>
+</div>
+
+<h2 class="mb-4">Public Golf Courses</h2>
+
+<div class="row">
+    {% for course in courses %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card course-card h-100">
+            {% if course.thumbnail %}
+            <img src="{{ course.thumbnail }}" class="card-img-top course-thumbnail" alt="{{ course.name }}">
+            {% else %}
+            <div class="card-img-top course-thumbnail bg-success d-flex align-items-center justify-content-center">
+                <h1 class="text-white">⛳</h1>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ course.name }}</h5>
+                <p class="card-text text-muted">
+                    <small>📍 {{ course.city }}, {{ course.state }}</small>
+                </p>
+                {% if course.rating_google %}
+                <p><span class="rating-badge">⭐ {{ course.rating_google }}</span></p>
+                {% endif %}
+                <p class="card-text">{{ course.address|truncatewords:10 }}</p>
+                {% if course.cost %}
+                <p class="text-success fw-bold">💵 {{ course.cost }}</p>
+                {% endif %}
+                <a href="{% url 'course_detail' course.id %}" 
+                   hx-get="{% url 'course_detail' course.id %}" 
+                   hx-target="#modal-content" 
+                   hx-swap="innerHTML"
+                   data-bs-toggle="modal" 
+                   data-bs-target="#courseModal"
+                   class="btn btn-success w-100">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            <h4>No courses found</h4>
+            <p>Try adjusting your search or filters. Or visit the <a href="/admin">admin panel</a> to add courses.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="modal fade" id="courseModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="modal-content">
+        </div>
+    </div>
+</div>
+{% endblock %}

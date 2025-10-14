@@ -1,0 +1,33 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h1>{{ course.name }}</h1>
+        <p class="lead text-muted">{{ course.city }}, {{ course.state }}</p>
+
+        {% if course.thumbnail %}
+        <img src="{{ course.thumbnail }}" class="img-fluid mb-4" alt="{{ course.name }}">
+        {% endif %}
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5>Location</h5>
+                <p>{{ course.address }}<br>
+                {{ course.city }}, {{ course.state }} {{ course.zip_code }}</p>
+
+                {% if course.phone_number %}
+                <h5>Contact</h5>
+                <p>📞 {{ course.phone_number }}</p>
+                {% endif %}
+
+                {% if course.website %}
+                <p>🌐 <a href="{{ course.website }}" target="_blank">Visit Website</a></p>
+                {% endif %}
+            </div>
+        </div>
+
+        <a href="{% url 'course_list' %}" class="btn btn-secondary">← Back to List</a>
+    </div>
+</div>
+{% endblock %}

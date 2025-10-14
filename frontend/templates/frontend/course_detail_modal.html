@@ -1,0 +1,60 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{ course.name }}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <h6>Location</h6>
+            <p>{{ course.address }}<br>
+            {{ course.city }}, {{ course.state }} {{ course.zip_code }}</p>
+
+            {% if course.phone_number %}
+            <h6>Contact</h6>
+            <p>📞 {{ course.phone_number }}</p>
+            {% endif %}
+
+            {% if course.website %}
+            <p>🌐 <a href="{{ course.website }}" target="_blank">Visit Website</a></p>
+            {% endif %}
+
+            {% if course.booking_link %}
+            <p>📅 <a href="{{ course.booking_link }}" target="_blank" class="btn btn-success">Book Tee Time</a></p>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            {% if course.rating_google or course.rating_golf_now or course.rating_grint %}
+            <h6>Ratings</h6>
+            <ul>
+                {% if course.rating_google %}<li>Google: ⭐ {{ course.rating_google }}</li>{% endif %}
+                {% if course.rating_golf_now %}<li>Golf Now: {{ course.rating_golf_now }}</li>{% endif %}
+                {% if course.rating_grint %}<li>The Grint: {{ course.rating_grint }}</li>{% endif %}
+            </ul>
+            {% endif %}
+
+            <h6>Course Details</h6>
+            <ul>
+                {% if course.course_length_forward %}<li>Length (Forward): {{ course.course_length_forward }} yards</li>{% endif %}
+                {% if course.course_length_tips %}<li>Length (Tips): {{ course.course_length_tips }} yards</li>{% endif %}
+                {% if course.course_slope %}<li>Slope: {{ course.course_slope }}</li>{% endif %}
+            </ul>
+
+            {% if course.cost or course.rent_cart_cost %}
+            <h6>Pricing</h6>
+            <ul>
+                {% if course.cost %}<li>Green Fee: {{ course.cost }}</li>{% endif %}
+                {% if course.rent_cart_cost %}<li>Cart Rental: {{ course.rent_cart_cost }}</li>{% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if course.amenities.all %}
+    <h6>Amenities</h6>
+    <div class="d-flex flex-wrap gap-2">
+        {% for amenity in course.amenities.all %}
+        <span class="badge bg-secondary">{{ amenity.name }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
