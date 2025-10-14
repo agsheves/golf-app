@@ -115,21 +115,20 @@ python manage.py runserver 0.0.0.0:5000
 - **Run**: `gunicorn --bind=0.0.0.0:5000 --reuse-port golf_registry.wsgi:application`
 
 ### Production Database & Demo Data
-- **Automatic Seeding**: Production database will be automatically populated with demo courses on first deployment
-- **Data Migration**: `0002_seed_demo_data.py` creates 2 sample courses (Pebble Beach, Torrey Pines) and 3 amenities
-- **No Duplicates**: Migration checks if courses exist before seeding, preventing duplicate data
+- **Automatic Setup**: Production database migrations run automatically during deployment
+- **Demo Data Seeding**: `seed_demo_data` management command populates sample courses
+- **No Duplicates**: Command checks if courses exist before seeding
 - **Demo Courses Included**:
   - Pebble Beach Golf Links (CA) - 4.8 rating, $575
   - Torrey Pines Golf Course (CA) - 4.7 rating, $252
   - Amenities: Driving Range, Pro Shop, Restaurant
 
 ### Deploying to Production:
-1. **First Deploy**: Migrations will auto-run and seed demo data automatically
-2. **Create admin user**: Run `python manage.py createsuperuser` to create your admin account
-3. **Optional**: Set `DEBUG=False` environment variable to disable debug mode in production
-4. The app uses the existing `SECRET_KEY` from your Replit secrets
+1. **Click Deploy** - Migrations and demo data seed automatically
+2. **Create admin user**: Run `python manage.py createsuperuser` after deployment
+3. **Optional**: Set `DEBUG=False` environment variable to disable debug mode
 
-That's it! Your app will work the same in development and production.
+The app uses the existing `SECRET_KEY` from Replit secrets and includes SSL database connections.
 
 ## Common Commands
 
@@ -171,11 +170,11 @@ The database includes:
 
 ## Recent Changes
 
-### 2025-10-14: Production Data Migration Added
-- ✅ Created data migration (`0002_seed_demo_data.py`) for automatic demo data seeding
-- ✅ Production database will auto-populate with Pebble Beach and Torrey Pines on first deployment
-- ✅ Migration includes duplicate prevention (checks if courses exist before seeding)
-- ✅ Updated deployment documentation with database seeding information
+### 2025-10-14: Production Deployment Fixed
+- ✅ Created `seed_demo_data` management command for reliable demo data seeding
+- ✅ Fixed deployment build process: migrations → seed data → collect static files
+- ✅ Added SSL database configuration for secure connections
+- ✅ Production database auto-populates with demo courses on deployment
 
 ### 2025-10-14: Simplified Configuration
 - ✅ Streamlined settings to work the same in dev and production
