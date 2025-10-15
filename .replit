@@ -38,10 +38,6 @@ externalPort = 80
 localPort = 32881
 externalPort = 3000
 
-[[ports]]
-localPort = 36011
-externalPort = 3001
-
 [deployment]
 deploymentTarget = "autoscale"
 run = ["gunicorn", "--bind=0.0.0.0:5000", "--reuse-port", "golf_registry.wsgi:application"]
