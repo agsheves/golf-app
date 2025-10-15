@@ -1,12 +1,19 @@
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
 from courses.models import Amenity, Course, CourseImage
 
 
 class Command(BaseCommand):
-    help = 'Load demo golf course data'
+    help = 'Load demo golf course data and create admin user'
 
     def handle(self, *args, **options):
         self.stdout.write('Loading demo data...')
+        
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser('admin', 'admin@golf.com', 'admin123')
+            self.stdout.write('  Created admin user (username: admin, password: admin123)')
+        else:
+            self.stdout.write('  Admin user already exists')
         
         amenities_data = [
             'Driving Range',
