@@ -168,13 +168,20 @@ class AdminActionsTest(TestCase):
         )
     
     def test_admin_can_login(self):
+        response = self.client.post(reverse('admin_login'), {
+            'username': 'admin',
+            'password': 'adminpass123'
+        })
+        self.assertEqual(response.status_code, 302)
+        
+    def test_admin_dashboard_accessible(self):
         self.client.login(username='admin', password='adminpass123')
-        response = self.client.get('/admin/')
+        response = self.client.get(reverse('admin_dashboard'))
         self.assertEqual(response.status_code, 200)
     
-    def test_course_admin_accessible(self):
+    def test_django_admin_accessible(self):
         self.client.login(username='admin', password='adminpass123')
-        response = self.client.get('/admin/courses/course/')
+        response = self.client.get('/django-admin/')
         self.assertEqual(response.status_code, 200)
 
 

@@ -5,21 +5,34 @@ A Django-based web application for discovering and managing public golf courses.
 
 ## Live Application
 - **Public Site**: Browse approved golf courses at the root URL (`/`)
-- **Admin Panel**: Manage courses and review imports at `/admin`
+- **Admin Dashboard**: Manage courses at `/admin/dashboard/` (requires staff login)
+  - **Test Credentials**: username: `admin`, password: `admin123`
   - **First-time setup**: Create admin user with `python manage.py createsuperuser`
   - Use a strong, unique password for production!
+- **Django Admin Panel**: Super admin access at `/django-admin/` for advanced configuration
 
 ## Key Features
 
 ### Public Frontend
 - **Responsive Card Layout**: Mobile and desktop optimized using Bootstrap 5
 - **Search & Filter**: Find courses by name, location, state, or amenities
-- **Course Cards**: Display key info (name, location, rating, pricing)
+- **Clickable Course Cards**: Click anywhere on a card to open course preview modal
 - **Detail Views**: HTMX-powered modal for quick course details
 - **Golf Flag Icons**: Default visual for courses without thumbnails
+- **Discrete Admin Access**: Admin login button in navbar for staff users
 
-### Admin Workflow
-- **Approval System**: Review and approve/reject imported courses
+### Admin Dashboard
+- **Custom Admin Interface**: Clean, user-friendly dashboard for course management
+- **Editable Course Cards**: Edit course information directly in card view
+- **Real-time Updates**: Auto-save fields as you type with visual feedback
+- **Quick Approval Toggle**: One-click approval/unapproval of courses
+- **Status Filtering**: Filter courses by approval status (pending, approved, rejected)
+- **Search & Filter**: Find courses by name, location, state
+- **Course Preview**: View public course page from admin dashboard
+- **User Authentication**: Login/logout functionality with staff-only access
+
+### Django Admin (Super Admin)
+- **Site Configuration**: Access at `/django-admin/` for advanced settings
 - **Bulk Actions**: Approve or reject multiple courses at once
 - **Import Management**: Convert ImportedCourse staging data to live Course records
 - **Custom Filters**: Filter by status, state, review date
