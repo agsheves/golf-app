@@ -201,6 +201,17 @@ The database includes:
 
 ## Recent Changes
 
+### 2025-10-15: Custom Admin Dashboard
+- ✅ **Admin Interface**: Custom admin dashboard at `/admin/dashboard/` for course management
+- ✅ **Editable Course Cards**: Real-time auto-save for all course fields as you type
+- ✅ **Quick Approval Toggle**: One-click approval/unapproval with visual feedback
+- ✅ **Admin Authentication**: Login/logout functionality with staff-only access
+- ✅ **Discrete Admin Button**: Admin login button in navbar (shows Dashboard/Logout when logged in)
+- ✅ **Clickable Course Cards**: Public users can click anywhere on a course card to open preview modal
+- ✅ **Status Filtering**: Filter courses by approval status (pending, approved, rejected, suppressed)
+- ✅ **Django Admin Separation**: Moved Django admin to `/django-admin/` for super admin access
+- ✅ **18 Tests Passing**: All tests updated and passing including new admin functionality
+
 ### 2025-10-14: Production SSL Connection Fix
 - ✅ **Fixed SSL connection errors**: Added `conn_health_checks=True` for automatic connection recovery
 - ✅ **Maintained SSL security**: Kept `ssl_require=True` to prevent plaintext connection fallback
