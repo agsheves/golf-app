@@ -40,7 +40,10 @@ def course_list(request):
 
 
 def course_detail(request, course_id):
-    course = get_object_or_404(Course, id=course_id, status='approved')
+    if request.user.is_authenticated and request.user.is_staff:
+        course = get_object_or_404(Course, id=course_id)
+    else:
+        course = get_object_or_404(Course, id=course_id, status='approved')
     
     context = {
         'course': course,

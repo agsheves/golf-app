@@ -19,11 +19,18 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from frontend import views
+from frontend import admin_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('django-admin/', admin.site.urls),
     path('', views.course_list, name='course_list'),
     path('course/<int:course_id>/', views.course_detail, name='course_detail'),
+    
+    path('admin/login/', admin_views.admin_login_view, name='admin_login'),
+    path('admin/logout/', admin_views.admin_logout_view, name='admin_logout'),
+    path('admin/dashboard/', admin_views.admin_dashboard, name='admin_dashboard'),
+    path('admin/course/<int:course_id>/toggle-approval/', admin_views.toggle_course_approval, name='toggle_course_approval'),
+    path('admin/course/<int:course_id>/update-field/', admin_views.update_course_field, name='update_course_field'),
 ]
 
 if settings.DEBUG:

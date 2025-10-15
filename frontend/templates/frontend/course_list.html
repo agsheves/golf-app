@@ -33,7 +33,12 @@
 <div class="row">
     {% for course in courses %}
     <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card course-card h-100">
+        <div class="card course-card h-100"
+             hx-get="{% url 'course_detail' course.id %}" 
+             hx-target="#modal-content" 
+             hx-swap="innerHTML"
+             data-bs-toggle="modal" 
+             data-bs-target="#courseModal">
             {% if course.images.all %}
             <img src="{{ course.images.first.image.url }}" class="card-img-top course-thumbnail" alt="{{ course.name }}">
             {% elif course.thumbnail %}
@@ -55,13 +60,6 @@
                 {% if course.cost %}
                 <p class="text-success fw-bold">💵 {{ course.cost }}</p>
                 {% endif %}
-                <a href="{% url 'course_detail' course.id %}" 
-                   hx-get="{% url 'course_detail' course.id %}" 
-                   hx-target="#modal-content" 
-                   hx-swap="innerHTML"
-                   data-bs-toggle="modal" 
-                   data-bs-target="#courseModal"
-                   class="btn btn-success w-100">View Details</a>
             </div>
         </div>
     </div>
