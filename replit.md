@@ -24,6 +24,7 @@ A Django-based web application for discovering and managing public golf courses.
 ### Admin Dashboard
 - **Custom Admin Interface**: Clean, user-friendly dashboard for course management
 - **Editable Course Cards**: Edit course information directly in card view
+- **Image Management**: Add/edit course thumbnail images with live preview
 - **Real-time Updates**: Auto-save fields as you type with visual feedback
 - **Quick Approval Toggle**: One-click approval/unapproval of courses
 - **Status Filtering**: Filter courses by approval status (pending, approved, rejected)
@@ -201,13 +202,15 @@ The database includes:
 
 ## Recent Changes
 
-### 2025-10-15: Custom Admin Dashboard
+### 2025-10-15: Custom Admin Dashboard & Image Management
 - ✅ **Admin Interface**: Custom admin dashboard at `/admin/dashboard/` for course management
 - ✅ **Editable Course Cards**: Real-time auto-save for all course fields as you type
+- ✅ **Image Management**: Add/edit course thumbnail images with live preview in admin panel
 - ✅ **Quick Approval Toggle**: One-click approval/unapproval with visual feedback
 - ✅ **Admin Authentication**: Login/logout functionality with staff-only access
 - ✅ **Discrete Admin Button**: Admin login button in navbar (shows Dashboard/Logout when logged in)
 - ✅ **Clickable Course Cards**: Public users can click anywhere on a course card to open preview modal
+- ✅ **Approval Filtering**: Public site only shows approved courses; admins see all courses
 - ✅ **Status Filtering**: Filter courses by approval status (pending, approved, rejected, suppressed)
 - ✅ **Django Admin Separation**: Moved Django admin to `/django-admin/` for super admin access
 - ✅ **18 Tests Passing**: All tests updated and passing including new admin functionality
