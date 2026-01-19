@@ -39,11 +39,15 @@ A Django-based web application for discovering and managing public golf courses.
 - **Custom Filters**: Filter by status, state, review date
 - **Amenity Management**: Create and assign amenities to courses
 
-### Web Scraper
-- **Management Command**: `python manage.py scrape_courses`
+### Web Scraper (FireCrawl)
+- **Powered by FireCrawl API**: Real web search and data extraction
+- **Management Commands**:
+  - `python manage.py scrape_courses --state "California" --limit 5` - Scrape courses from a state
+  - `python manage.py test_scraper --dry-run` - Test scraper with 3 states (AZ, TX, FL)
 - **Staging Table**: ImportedCourse stores scraped data for review
 - **Data Structure**: JSON raw_data field preserves original scraped content
 - **Source Tracking**: Records source URL and type (scraper/manual/API)
+- **Requires**: FIRECRAWL_API_KEY environment secret
 
 ## Tech Stack
 - **Framework**: Django 5.2.7
@@ -75,10 +79,12 @@ frontend/              # Public-facing views and templates
 │       └── course_detail_modal.html
 └── static/           # CSS, JS (currently using CDN)
 
-scraper/               # Data collection app
+scraper/               # Data collection app (FireCrawl-powered)
+├── search_and_scrape.py  # Core scraping functions
 └── management/
     └── commands/
-        └── scrape_courses.py
+        ├── scrape_courses.py  # Main scraper command
+        └── test_scraper.py    # Test with 3 states
 ```
 
 ## Database Models
@@ -168,8 +174,11 @@ python manage.py createsuperuser
 # Load demo golf course data
 python manage.py seed_demo_data
 
-# Run scraper
-python manage.py scrape_courses
+# Run scraper for a specific state
+python manage.py scrape_courses --state "California" --limit 5
+
+# Test scraper with 3 states (dry run)
+python manage.py test_scraper --dry-run
 
 # Make migrations
 python manage.py makemigrations
@@ -189,6 +198,9 @@ python manage.py shell
 ### Database (Replit PostgreSQL)
 - `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGHOST`, `PGPORT` - Auto-configured by Replit
 
+### Required Secrets
+- `FIRECRAWL_API_KEY` - Required for web scraping functionality
+
 ### Optional Settings
 - `SECRET_KEY` - Already configured in Replit secrets
 - `DEBUG` - Set to `False` to disable debug mode (defaults to `True`)
@@ -201,6 +213,13 @@ The database includes:
 - Various amenities (Driving Range, Pro Shop, Restaurant, Clubhouse)
 
 ## Recent Changes
+
+### 2026-01-19: FireCrawl Integration & Cleanup
+- ✅ **FireCrawl Integration**: Real web scraping using FireCrawl search API
+- ✅ **Scrape Command**: `python manage.py scrape_courses --state "California"` for real data collection
+- ✅ **Test Command**: `python manage.py test_scraper` tests 3 states (AZ, TX, FL)
+- ✅ **Cleaned Up Repo**: Removed 7 placeholder files with empty Django boilerplate
+- ✅ **Pydantic Schemas**: Structured data extraction ready for deep scraping
 
 ### 2025-10-15: Custom Admin Dashboard & Image Management
 - ✅ **Admin Interface**: Custom admin dashboard at `/admin/dashboard/` for course management
@@ -259,7 +278,7 @@ The database includes:
 
 ## Next Steps / Enhancements
 
-1. **Enhanced Scraper**: Add real scraping logic for golf course websites
+1. **Deep Course Scraping**: Use FireCrawl extract API to get detailed course data from individual sites
 2. **Image Uploads**: Enable course image uploads via admin
 3. **Geolocation**: Add map view and distance-based search
 4. **User Reviews**: Allow public users to rate and review courses
