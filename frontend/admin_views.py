@@ -102,6 +102,27 @@ def toggle_course_approval(request, course_id):
 @login_required
 @user_passes_test(is_staff_user)
 @require_POST
+def reject_course(request, course_id):
+    """Reject a course - keeps it in database to prevent re-scraping."""
+    course = get_object_or_404(Course, id=course_id)
+    
+    course.status = 'rejected'
+    course.reviewed_by = request.user
+    from django.utils import timezone
+    course.reviewed_at = timezone.now()
+    
+    course.save()
+    
+    return JsonResponse({
+        'success': True,
+        'status': course.status,
+        'status_display': course.get_status_display()
+    })
+
+
+@login_required
+@user_passes_test(is_staff_user)
+@require_POST
 def update_course_field(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     field_name = request.POST.get('field')

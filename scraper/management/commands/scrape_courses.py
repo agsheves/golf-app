@@ -79,18 +79,27 @@ class Command(BaseCommand):
             return
         
         saved_count = 0
+        skipped_count = 0
         for course_data in courses:
             name = course_data.get('name', '')
+            source_url = course_data.get('source_url', '')
             if not name:
                 continue
             
-            existing = Course.objects.filter(
-                name=name,
-                website=course_data.get('source_url', '')
-            ).exists()
+            existing_by_url = Course.objects.filter(website=source_url).first() if source_url else None
+            existing_by_name = Course.objects.filter(name=name, state=state).first()
+            
+            existing = existing_by_url or existing_by_name
             
             if existing:
-                self.stdout.write(f'  Skipping duplicate: {name[:50]}')
+                status_msg = f" (status: {existing.status})"
+                if existing.status == 'rejected':
+                    self.stdout.write(self.style.WARNING(
+                        f'  Skipping rejected course: {name[:50]}{status_msg}'
+                    ))
+                else:
+                    self.stdout.write(f'  Skipping existing: {name[:50]}{status_msg}')
+                skipped_count += 1
                 continue
             
             try:
@@ -116,3 +125,5 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(
             f'\nScraper completed! Saved {saved_count} new courses from {state} with status=pending'
         ))
+        if skipped_count:
+            self.stdout.write(f'Skipped {skipped_count} existing/rejected courses')

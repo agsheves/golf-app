@@ -30,6 +30,7 @@ urlpatterns = [
     path('admin/logout/', admin_views.admin_logout_view, name='admin_logout'),
     path('admin/dashboard/', admin_views.admin_dashboard, name='admin_dashboard'),
     path('admin/course/<int:course_id>/toggle-approval/', admin_views.toggle_course_approval, name='toggle_course_approval'),
+    path('admin/course/<int:course_id>/reject/', admin_views.reject_course, name='reject_course'),
     path('admin/course/<int:course_id>/update-field/', admin_views.update_course_field, name='update_course_field'),
 ]
 

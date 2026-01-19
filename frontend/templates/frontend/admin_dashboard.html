@@ -157,14 +157,28 @@
                         </div>
                         
                         <div class="col-md-4">
-                            <div class="text-center mb-3">
-                                <button class="btn btn-lg w-100 approval-toggle-btn 
-                                       {% if course.status == 'approved' %}btn-success{% else %}btn-outline-secondary{% endif %}"
-                                        data-course-id="{{ course.id }}"
-                                        data-status="{{ course.status }}">
-                                    <i class="bi {% if course.status == 'approved' %}bi-check-circle-fill{% else %}bi-circle{% endif %} me-2"></i>
+                            <div class="mb-3">
+                                <div class="d-flex gap-2 mb-2">
+                                    <button class="btn flex-fill approve-btn 
+                                           {% if course.status == 'approved' %}btn-success{% else %}btn-outline-success{% endif %}"
+                                            data-course-id="{{ course.id }}"
+                                            {% if course.status == 'approved' %}disabled{% endif %}>
+                                        <i class="bi bi-check-circle me-1"></i>Approve
+                                    </button>
+                                    <button class="btn flex-fill reject-btn 
+                                           {% if course.status == 'rejected' %}btn-danger{% else %}btn-outline-danger{% endif %}"
+                                            data-course-id="{{ course.id }}"
+                                            {% if course.status == 'rejected' %}disabled{% endif %}>
+                                        <i class="bi bi-x-circle me-1"></i>Reject
+                                    </button>
+                                </div>
+                                <div class="status-badge text-center py-2 rounded 
+                                    {% if course.status == 'approved' %}bg-success text-white
+                                    {% elif course.status == 'rejected' %}bg-danger text-white
+                                    {% else %}bg-warning text-dark{% endif %}"
+                                    data-course-id="{{ course.id }}">
                                     <span class="status-text">{{ course.get_status_display }}</span>
-                                </button>
+                                </div>
                             </div>
                             
                             <div class="badge bg-info text-dark w-100 mb-2">
@@ -235,11 +249,45 @@
 document.addEventListener('DOMContentLoaded', function() {
     const csrfToken = '{{ csrf_token }}';
     
-    document.querySelectorAll('.approval-toggle-btn').forEach(btn => {
+    function updateStatusUI(courseId, status, statusDisplay) {
+        const card = document.querySelector(`.course-admin-card[data-course-id="${courseId}"]`);
+        if (!card) return;
+        
+        const approveBtn = card.querySelector('.approve-btn');
+        const rejectBtn = card.querySelector('.reject-btn');
+        const statusBadge = card.querySelector('.status-badge');
+        const statusText = statusBadge.querySelector('.status-text');
+        
+        statusText.textContent = statusDisplay;
+        
+        statusBadge.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'text-white', 'text-dark');
+        approveBtn.classList.remove('btn-success', 'btn-outline-success');
+        rejectBtn.classList.remove('btn-danger', 'btn-outline-danger');
+        
+        if (status === 'approved') {
+            statusBadge.classList.add('bg-success', 'text-white');
+            approveBtn.classList.add('btn-success');
+            approveBtn.disabled = true;
+            rejectBtn.classList.add('btn-outline-danger');
+            rejectBtn.disabled = false;
+        } else if (status === 'rejected') {
+            statusBadge.classList.add('bg-danger', 'text-white');
+            approveBtn.classList.add('btn-outline-success');
+            approveBtn.disabled = false;
+            rejectBtn.classList.add('btn-danger');
+            rejectBtn.disabled = true;
+        } else {
+            statusBadge.classList.add('bg-warning', 'text-dark');
+            approveBtn.classList.add('btn-outline-success');
+            approveBtn.disabled = false;
+            rejectBtn.classList.add('btn-outline-danger');
+            rejectBtn.disabled = false;
+        }
+    }
+    
+    document.querySelectorAll('.approve-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const courseId = this.dataset.courseId;
-            const statusText = this.querySelector('.status-text');
-            const icon = this.querySelector('i');
             
             fetch(`/admin/course/${courseId}/toggle-approval/`, {
                 method: 'POST',
@@ -251,20 +299,31 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    statusText.textContent = data.status_display;
-                    this.dataset.status = data.status;
-                    
-                    if (data.status === 'approved') {
-                        this.classList.remove('btn-outline-secondary');
-                        this.classList.add('btn-success');
-                        icon.classList.remove('bi-circle');
-                        icon.classList.add('bi-check-circle-fill');
-                    } else {
-                        this.classList.remove('btn-success');
-                        this.classList.add('btn-outline-secondary');
-                        icon.classList.remove('bi-check-circle-fill');
-                        icon.classList.add('bi-circle');
-                    }
+                    updateStatusUI(courseId, data.status, data.status_display);
+                }
+            });
+        });
+    });
+    
+    document.querySelectorAll('.reject-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const courseId = this.dataset.courseId;
+            
+            if (!confirm('Reject this course? It will remain in the database to prevent re-scraping.')) {
+                return;
+            }
+            
+            fetch(`/admin/course/${courseId}/reject/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateStatusUI(courseId, data.status, data.status_display);
                 }
             });
         });
