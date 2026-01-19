@@ -73,12 +73,6 @@ DIRECTORY_URL_PATTERNS = [
     r'/course-directory',
     r'/course-listing',
     r'/all-courses',
-    r'/parks/',
-    r'/departments/',
-    r'/administration/',
-    r'/activities',
-    r'/facilities',
-    r'/public-golf',
 ]
 
 DIRECTORY_TITLE_PATTERNS = [
@@ -89,6 +83,17 @@ DIRECTORY_TITLE_PATTERNS = [
     r'golf\s+courses$',
     r'course\s+listing',
     r'find\s+a\s+course',
+]
+
+MUNICIPAL_URL_PATTERNS = [
+    r'\.gov/',
+    r'/parks/',
+    r'/departments/',
+    r'/administration/',
+    r'/activities',
+    r'/facilities',
+    r'/recreation/',
+    r'/public-golf',
 ]
 
 
@@ -122,12 +127,30 @@ def is_aggregator_url(url: str, title: str) -> bool:
     return False
 
 
+def is_municipal_listing(url: str, title: str) -> bool:
+    """
+    Check if URL is a municipal/government site listing public courses.
+    These are GOOD sources for extracting course names.
+    """
+    url_lower = url.lower()
+    
+    for pattern in MUNICIPAL_URL_PATTERNS:
+        if re.search(pattern, url_lower):
+            return True
+    
+    return False
+
+
 def is_directory_or_listing(url: str, title: str) -> bool:
     """
     Check if URL is a directory or listing page (multiple courses).
+    Excludes municipal sites which are treated as extractable sources.
     """
     url_lower = url.lower()
     title_lower = title.lower()
+    
+    if is_municipal_listing(url, title):
+        return False
     
     for pattern in DIRECTORY_URL_PATTERNS:
         if re.search(pattern, url_lower):
@@ -394,7 +417,9 @@ def search_and_scrape_courses(state: str, limit: int = 5) -> list[dict]:
                 'url': url,
                 'description': result.get('description', ''),
             })
-        elif is_aggregator_url(url, title):
+        elif is_aggregator_url(url, title) or is_municipal_listing(url, title):
+            if is_municipal_listing(url, title):
+                print(f"  Found municipal listing: {title[:50]}...")
             aggregator_urls.append(url)
     
     extracted_names = []
