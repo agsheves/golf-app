@@ -7,7 +7,7 @@ Usage:
 """
 import os
 from django.core.management.base import BaseCommand
-from courses.models import ImportedCourse
+from courses.models import Course
 from scraper.search_and_scrape import search_and_scrape_courses
 
 
@@ -84,9 +84,9 @@ class Command(BaseCommand):
             if not name:
                 continue
             
-            existing = ImportedCourse.objects.filter(
+            existing = Course.objects.filter(
                 name=name,
-                source_url=course_data.get('source_url', '')
+                website=course_data.get('source_url', '')
             ).exists()
             
             if existing:
@@ -94,20 +94,19 @@ class Command(BaseCommand):
                 continue
             
             try:
-                imported = ImportedCourse.objects.create(
-                    source='scraper',
-                    source_url=course_data.get('source_url', ''),
-                    raw_data=course_data.get('raw_data', {}),
+                course = Course.objects.create(
                     name=name,
-                    address=course_data.get('address', ''),
-                    city=course_data.get('city', ''),
+                    address=course_data.get('description', '')[:500] if course_data.get('description') else '',
+                    city='',
                     state=state,
                     phone_number=course_data.get('phone_number', ''),
                     website=course_data.get('source_url', ''),
+                    cost=course_data.get('cost', ''),
+                    status='pending',
                 )
                 saved_count += 1
                 self.stdout.write(self.style.SUCCESS(
-                    f'  Created import: {imported.name[:50]}'
+                    f'  Created course (pending): {course.name[:50]}'
                 ))
             except Exception as e:
                 self.stderr.write(self.style.ERROR(
@@ -115,5 +114,5 @@ class Command(BaseCommand):
                 ))
         
         self.stdout.write(self.style.SUCCESS(
-            f'\nScraper completed! Saved {saved_count} new courses from {state}'
+            f'\nScraper completed! Saved {saved_count} new courses from {state} with status=pending'
         ))
