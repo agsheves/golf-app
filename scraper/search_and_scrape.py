@@ -359,6 +359,13 @@ def search_for_course_website(course_name: str, state: str) -> Optional[dict]:
     return None
 
 
+def extract_images_from_markdown(markdown: str) -> list[str]:
+    """Extract image URLs from markdown ![alt](url) syntax."""
+    pattern = r'!\[[^\]]*\]\(([^)]+)\)'
+    urls = re.findall(pattern, markdown)
+    return [u for u in urls if u.startswith('http')]
+
+
 def pick_best_image(og_image: Optional[str], images: list[str], url: str) -> Optional[str]:
     """
     Pick the best thumbnail image from available sources.
@@ -374,6 +381,7 @@ def pick_best_image(og_image: Optional[str], images: list[str], url: str) -> Opt
         r'course', r'golf', r'hole', r'aerial', r'hero',
         r'banner', r'header', r'main', r'feature', r'gallery',
         r'photo', r'scenic', r'fairway', r'green',
+        r'getImage', r'dynamic', r'slider', r'slide',
     ]
 
     if og_image and og_image.startswith('http'):
@@ -386,11 +394,11 @@ def pick_best_image(og_image: Optional[str], images: list[str], url: str) -> Opt
         img_lower = img.lower()
         if any(re.search(p, img_lower) for p in skip_patterns):
             continue
-        if not re.search(r'\.(jpg|jpeg|png|webp)', img_lower):
-            continue
         score = 0
         if any(re.search(p, img_lower) for p in good_patterns):
             score += 10
+        if re.search(r'\.(jpg|jpeg|png|webp)', img_lower):
+            score += 5
         scored.append((score, img))
 
     if scored:
@@ -442,6 +450,8 @@ def scrape_course_details(url: str) -> dict:
                 og_image = None
 
             page_images = getattr(result, 'images', None) or []
+            if not page_images:
+                page_images = extract_images_from_markdown(content)
             thumbnail = pick_best_image(og_image, page_images, url)
             if thumbnail:
                 data['thumbnail'] = thumbnail
