@@ -106,11 +106,13 @@ class Command(BaseCommand):
                 course = Course.objects.create(
                     name=name,
                     address=course_data.get('description', '')[:500] if course_data.get('description') else '',
-                    city='',
+                    city=course_data.get('city', ''),
                     state=state,
+                    zip_code=course_data.get('zip_code', ''),
                     phone_number=course_data.get('phone_number', ''),
                     website=course_data.get('source_url', ''),
                     cost=course_data.get('cost', ''),
+                    thumbnail=course_data.get('thumbnail', ''),
                     status='pending',
                 )
                 saved_count += 1

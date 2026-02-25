@@ -359,6 +359,47 @@ def search_for_course_website(course_name: str, state: str) -> Optional[dict]:
     return None
 
 
+def pick_best_image(og_image: Optional[str], images: list[str], url: str) -> Optional[str]:
+    """
+    Pick the best thumbnail image from available sources.
+    Priority: og_image > large course-related images > first valid image
+    """
+    skip_patterns = [
+        r'logo', r'icon', r'favicon', r'sprite', r'badge',
+        r'button', r'arrow', r'pixel', r'tracking', r'spacer',
+        r'1x1', r'widget', r'banner-ad', r'advertisement',
+    ]
+
+    good_patterns = [
+        r'course', r'golf', r'hole', r'aerial', r'hero',
+        r'banner', r'header', r'main', r'feature', r'gallery',
+        r'photo', r'scenic', r'fairway', r'green',
+    ]
+
+    if og_image and og_image.startswith('http'):
+        return og_image
+
+    scored = []
+    for img in images:
+        if not img or not img.startswith('http'):
+            continue
+        img_lower = img.lower()
+        if any(re.search(p, img_lower) for p in skip_patterns):
+            continue
+        if not re.search(r'\.(jpg|jpeg|png|webp)', img_lower):
+            continue
+        score = 0
+        if any(re.search(p, img_lower) for p in good_patterns):
+            score += 10
+        scored.append((score, img))
+
+    if scored:
+        scored.sort(key=lambda x: x[0], reverse=True)
+        return scored[0][1]
+
+    return None
+
+
 def scrape_course_details(url: str) -> dict:
     client = get_firecrawl_client()
     data = {'source_url': url}
@@ -393,8 +434,18 @@ def scrape_course_details(url: str) -> dict:
                 data['state_abbrev'] = city_match.group(2)
 
             metadata = getattr(result, 'metadata', None)
-            if metadata and hasattr(metadata, 'description') and metadata.description:
-                data['description'] = metadata.description[:500]
+            if metadata:
+                if hasattr(metadata, 'description') and metadata.description:
+                    data['description'] = metadata.description[:500]
+                og_image = getattr(metadata, 'og_image', None)
+            else:
+                og_image = None
+
+            page_images = getattr(result, 'images', None) or []
+            thumbnail = pick_best_image(og_image, page_images, url)
+            if thumbnail:
+                data['thumbnail'] = thumbnail
+                print(f"    Found image: {thumbnail[:80]}...")
 
     except Exception as e:
         print(f"  Error scraping {url}: {e}")
@@ -527,6 +578,7 @@ def search_and_scrape_courses(state: str, limit: int = 5) -> list[dict]:
             'cost': details.get('cost', ''),
             'zip_code': details.get('zip_code', ''),
             'city': details.get('city', ''),
+            'thumbnail': details.get('thumbnail', ''),
             'raw_data': {
                 'search_result': course_info,
                 'scraped_content': details.get('raw_content', '')[:1000],
