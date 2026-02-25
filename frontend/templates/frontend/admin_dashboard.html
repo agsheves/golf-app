@@ -94,6 +94,34 @@
                     </button>
                 </div>
             </form>
+            {% if recent_scrapes %}
+            <hr>
+            <h6 class="text-muted mb-2"><i class="bi bi-clock-history me-1"></i>Recent Scrapes</h6>
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless mb-0">
+                    <thead>
+                        <tr class="text-muted small">
+                            <th>State</th>
+                            <th>Query</th>
+                            <th>New</th>
+                            <th>Skipped</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in recent_scrapes %}
+                        <tr class="small">
+                            <td>{{ log.state }}</td>
+                            <td class="text-truncate" style="max-width: 200px;">{{ log.search_query }}</td>
+                            <td><span class="badge bg-success">{{ log.courses_created }}</span></td>
+                            <td><span class="badge bg-secondary">{{ log.courses_skipped }}</span></td>
+                            <td>{{ log.created_at|date:"M d, H:i" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
         </div>
     </div>
 

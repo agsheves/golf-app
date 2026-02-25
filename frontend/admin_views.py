@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from courses.models import Course, Amenity
+from courses.models import Course, Amenity, ScrapeLog
 from django.db.models import Q
 
 US_STATES = [
@@ -77,6 +77,7 @@ def admin_dashboard(request):
     
     states = Course.objects.values_list('state', flat=True).distinct().order_by('state')
     amenities = Amenity.objects.all()
+    recent_scrapes = ScrapeLog.objects.all()[:5]
     
     context = {
         'courses': courses,
@@ -87,6 +88,7 @@ def admin_dashboard(request):
         'selected_state': state_filter,
         'status_choices': Course.STATUS_CHOICES,
         'scraper_states': US_STATES,
+        'recent_scrapes': recent_scrapes,
     }
     
     return render(request, 'frontend/admin_dashboard.html', context)

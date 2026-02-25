@@ -38,13 +38,16 @@ No specific user preferences were provided in the original `replit.md` file.
     - Facilitates conversion of `ImportedCourse` staging data to live `Course` records.
 - **Web Scraper (FireCrawl)**:
     - Utilizes a multi-step search process to identify and scrape actual golf course websites, avoiding aggregator sites.
-    - Management commands (`scrape_courses`, `test_scraper`) for execution.
+    - Management commands (`scrape_courses`, `test_scraper`) for execution, plus in-dashboard trigger via "Search & Scrape" button.
     - Intelligently extracts course names, phone numbers, pricing, addresses, and saves them to the `Course` table with a 'pending' status.
     - Includes rate limiting to comply with API usage policies.
+    - **Efficient batching**: Checks DB before every API call to skip known URLs/names at discovery stage (free) rather than after scraping (costly). Rotates through 12 different search query templates per state to find new results on each pass. All discovered URLs are logged in `ScrapeLog` to prevent re-discovery costs.
+    - Dashboard shows recent scrape history with counts of new vs skipped courses.
 
 ### System Design Choices
 - **Database Models**:
     - `Course`: Stores approved course data, including status, contact info, details, ratings, pricing, amenities (many-to-many), and moderation logs.
+    - `ScrapeLog`: Tracks each scrape pass — state, search query used, URLs discovered, and counts of new/skipped courses. Used to rotate queries and prevent re-discovery costs.
     - `ImportedCourse`: A staging model for scraped/imported data, containing raw JSON and source information, used before conversion to a `Course`.
     - `Amenity`: Reusable amenity definitions (e.g., Driving Range, Pro Shop).
     - `CourseImage`: Stores multiple images per course, with a primary image flag for thumbnails.
