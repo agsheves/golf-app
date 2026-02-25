@@ -97,11 +97,10 @@ if DATABASE_URL:
             DATABASE_URL, 
             conn_max_age=600,
             conn_health_checks=True,
-            ssl_require=True,
+            ssl_require=not DEBUG,
         )
     }
 else:
-    # Fallback to individual PG* variables if DATABASE_URL not available
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -112,9 +111,6 @@ else:
             'PORT': os.getenv('PGPORT'),
             'CONN_MAX_AGE': 600,
             'CONN_HEALTH_CHECKS': True,
-            'OPTIONS': {
-                'sslmode': 'require',
-            },
         }
     }
 

@@ -63,6 +63,40 @@
         </div>
     </div>
 
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title mb-3">
+                <i class="bi bi-globe me-2"></i>Web Scraper
+            </h5>
+            <form method="post" action="{% url 'run_scraper' %}" class="row g-3 align-items-end">
+                {% csrf_token %}
+                <div class="col-md-5">
+                    <label class="form-label fw-bold small text-muted">Select State</label>
+                    <select class="form-select" name="state" required>
+                        <option value="">Choose a state...</option>
+                        {% for s in scraper_states %}
+                        <option value="{{ s }}">{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold small text-muted">Max Courses</label>
+                    <select class="form-select" name="limit">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-search me-1"></i>Search & Scrape
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="mb-3">
         <h4>Manage Courses <span class="badge bg-secondary">{{ courses.count }}</span></h4>
     </div>

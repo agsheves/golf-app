@@ -1,3 +1,5 @@
+import subprocess
+import sys
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -6,6 +8,19 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from courses.models import Course, Amenity
 from django.db.models import Q
+
+US_STATES = [
+    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
+    'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
+    'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+    'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+    'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada',
+    'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
+    'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon',
+    'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota',
+    'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
+    'West Virginia', 'Wisconsin', 'Wyoming',
+]
 
 
 def is_staff_user(user):
@@ -71,6 +86,7 @@ def admin_dashboard(request):
         'selected_status': status_filter,
         'selected_state': state_filter,
         'status_choices': Course.STATUS_CHOICES,
+        'scraper_states': US_STATES,
     }
     
     return render(request, 'frontend/admin_dashboard.html', context)
@@ -143,3 +159,35 @@ def update_course_field(request, course_id):
         return JsonResponse({'success': True, 'value': field_value})
     
     return JsonResponse({'success': False, 'error': 'Invalid field'}, status=400)
+
+
+@login_required
+@user_passes_test(is_staff_user)
+@require_POST
+def run_scraper(request):
+    state = request.POST.get('state', '')
+    limit = request.POST.get('limit', '5')
+
+    if not state or state not in US_STATES:
+        messages.error(request, 'Please select a valid US state.')
+        return redirect('admin_dashboard')
+
+    try:
+        limit_int = int(limit)
+        if limit_int < 1 or limit_int > 20:
+            limit_int = 5
+    except (ValueError, TypeError):
+        limit_int = 5
+
+    subprocess.Popen(
+        [sys.executable, 'manage.py', 'scrape_courses', '--state', state, '--limit', str(limit_int)],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+    messages.success(
+        request,
+        f'Scraper started for {state} (limit: {limit_int}). '
+        f'New courses will appear as "Pending" shortly.'
+    )
+    return redirect('admin_dashboard')

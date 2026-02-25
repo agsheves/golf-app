@@ -32,6 +32,7 @@ urlpatterns = [
     path('admin/course/<int:course_id>/toggle-approval/', admin_views.toggle_course_approval, name='toggle_course_approval'),
     path('admin/course/<int:course_id>/reject/', admin_views.reject_course, name='reject_course'),
     path('admin/course/<int:course_id>/update-field/', admin_views.update_course_field, name='update_course_field'),
+    path('admin/run-scraper/', admin_views.run_scraper, name='run_scraper'),
 ]
 
 if settings.DEBUG:
